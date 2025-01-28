@@ -1,58 +1,123 @@
 @extends('layouts.main')
 
 @section('content')
-    <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-        <div class="max-w-2xl mx-auto">
-            <div class="text-center">
-                <h2 class="text-xl font-bold text-gray-800 sm:text-3xl dark:text-white">
-                    Edit Product
-                </h2>
+    <div
+        class="w-4/12 mx-auto border border-gray-200 shadow-sm relativebg-white rounded-xl dark:bg-neutral-900 dark:border-neutral-700 mt-36">
+        <div class="p-4 sm:p-7">
+            <div class="mb-6 text-center">
+                <h1 class="block mb-3 text-3xl font-bold text-gray-800 dark:text-white">Sign in</h1>
+                <p class="mt-2 text-sm text-gray-600 dark:text-neutral-400">
+                    Don't have an account yet?
+                    <a class="font-medium text-blue-600 decoration-2 hover:underline focus:outline-none focus:underline dark:text-blue-500"
+                        href="{{ route('register') }}">
+                        Sign up here
+                    </a>
+                </p>
             </div>
 
-            <!-- Card -->
-            <div
-                class="relative z-10 p-4 mt-5 bg-white border rounded-xl sm:mt-10 md:p-10 dark:bg-neutral-900 dark:border-neutral-700">
-                <form action="{{ route('updateBarang', $barang->id_barang) }}" method="POST" enctype="multipart/form-data">
+            <div class="mt-5">
+                <!-- Form -->
+                <form method="POST" action="{{ route('registerProcess') }}">
                     @csrf
-                    @method('patch')
-                    <div class="mb-4 sm:mb-8">
-                        <label for="hs-feedback-post-comment-name-1"
-                            class="block mb-2 text-sm font-medium dark:text-white">Product Name</label>
-                        <input type="text" id="hs-feedback-post-comment-name-1"
-                            class="block w-full px-4 py-3 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                            placeholder="Enter Product Name" name="nama_barang" autocomplete="off" value="{{ $barang->nama_barang }}">
-                    </div>
+                    <div class="grid gap-y-4">
+                        <!-- Form Group -->
+                        <div class="mb-6">
+                            <label for="username" class="block mb-3 text-sm dark:text-white">Email address</label>
+                            <div class="relative">
+                                <input type="text" id="username" name="username"
+                                    class="block w-full px-4 py-3 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+                                    required aria-describedby="email-error" form-control
+                                    @error('username') is-invalid @enderror value="{{ old('username') }}" required
+                                    autocomplete="off" autofocus>
+                                <div class="absolute inset-y-0 hidden pointer-events-none end-0 pe-3">
+                                    <svg class="text-red-500 size-5" width="16" height="16" fill="currentColor"
+                                        viewBox="0 0 16 16" aria-hidden="true">
+                                        <path
+                                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            @error('username')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="mb-6">
+                            <label for="email" class="block mb-3 text-sm dark:text-white">Email address</label>
+                            <div class="relative">
+                                <input type="email" id="email" name="email"
+                                    class="block w-full px-4 py-3 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+                                    required aria-describedby="email-error" @error('email') is-invalid @enderror
+                                    name="email" value="{{ old('email') }}" required autocomplete="email">
+                                <div class="absolute inset-y-0 hidden pointer-events-none end-0 pe-3">
+                                    <svg class="text-red-500 size-5" width="16" height="16" fill="currentColor"
+                                        viewBox="0 0 16 16" aria-hidden="true">
+                                        <path
+                                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <!-- End Form Group -->
 
-                    <div class="mb-4 sm:mb-8">
-                        <label for="hs-feedback-post-comment-email-1"
-                            class="block mb-2 text-sm font-medium dark:text-white">Price</label>
-                        <input type="number" id="hs-feedback-post-comment-email-1"
-                            class="block w-full px-4 py-3 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                            placeholder="Enter Price" name="harga_barang" value="{{ $barang->harga_barang }}">
+                        <!-- Form Group -->
+                        <div class="mb-4">
+                            <div class="relative mb-8 ">
+                                <label for="password" class="block mb-3 text-sm dark:text-white">Password</label>
+                                <input type="password" id="password" name="password"
+                                    class="block w-full px-4 py-3 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+                                    required aria-describedby="password-error @error('password') is-invalid @enderror"
+                                    name="password" required autocomplete="off">
+                                <div class="absolute inset-y-0 hidden pointer-events-none end-0 pe-3">
+                                    <svg class="text-red-500 size-5" width="16" height="16" fill="currentColor"
+                                        viewBox="0 0 16 16" aria-hidden="true">
+                                        <path
+                                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="mb-4">
+                            <div class="relative mb-8 ">
+                                <label for="password" class="block mb-3 text-sm dark:text-white">Confirm Password</label>
+                                <input type="password" id="password-confirm" name="password_confirmation"
+                                    class="block w-full px-4 py-3 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+                                    required aria-describedby="password-error @error('password') is-invalid @enderror"
+                                     required autocomplete="off">
+                                <div class="absolute inset-y-0 hidden pointer-events-none end-0 pe-3">
+                                    <svg class="text-red-500 size-5" width="16" height="16" fill="currentColor"
+                                        viewBox="0 0 16 16" aria-hidden="true">
+                                        <path
+                                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <!-- End Form Group -->
                     </div>
-                    <div class="mb-4 sm:mb-8">
-                        <label for="hs-feedback-post-comment-email-1"
-                            class="block mb-2 text-sm font-medium dark:text-white">Stock</label>
-                        <input type="number" id="hs-feedback-post-comment-email-1"
-                            class="block w-full px-4 py-3 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                            placeholder="Product Stock" name="stock" value="{{ $barang->stock }}">
-                    </div>
-                    <div class="mb-4 sm:mb-8">
-                        <label for="hs-feedback-post-comment-email-1"
-                            class="block mb-2 text-sm font-medium dark:text-white">Pictures</label>
-                        <input type="file" id="hs-feedback-post-comment-email-1"
-                            class="block w-full px-4 py-3 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                            placeholder="Enter Price" name="image" value="{{ $barang->image }}">
-                            <img src="{{ asset('images/products/' . $barang->image) }}" alt="Gambar Barang">
-                    </div>
-                    <div class="grid mt-6">
-                        <button type="submit"
-                            class="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-lg gap-x-2 hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">Submit</button>
-                    </div>
-                </form>
+                    <button type="submit"
+                        class="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-lg gap-x-2 hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">Sign
+                        in</button>
             </div>
-            <!-- End Card -->
+            </form>
+            <!-- End Form -->
         </div>
     </div>
-    <!-- End Comment Form -->
+    </div>
 @endsection

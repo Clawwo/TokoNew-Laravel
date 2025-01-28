@@ -6,58 +6,76 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    function registerProcess(Request $request)
-    {
-        $username = htmlspecialchars($request->input('username'));
-        $email = htmlspecialchars($request->input('email'));
-        $password = htmlspecialchars($request->input('password'));
-
-        $HashedPass = Hash::make($password);
-
-        $user = new User();
-        $user->username = $username;
-        $user->email = $email;
-        $user->password = $HashedPass;
-        $user->role = 'Pegawai';
-        $user->save();
-
-        return redirect('/admin/pegawai');
-    }
-
-    public function registerPegawai()
-    {
-        return view('account.registrasi');
-    }
-
-    function loginProcess(Request $request)
-    {
-        $email = htmlspecialchars($request->input('email'));
-        $password = htmlspecialchars($request->input('password'));
-
-        $user = User::where('email', $email)->first();
-
-        if ($user && Hash::check($password, $user->password)) {
-            if ($user->role == 'Admin') {
-                return redirect('/admin/pelanggan');
-            } elseif ($user->role == 'Pegawai') {
-                return redirect('/admin/pegawai');
-            }
-        }
-
-        return redirect('/login')->with('error', 'Username atau password salah');
-    }
-
     public function login()
     {
         return view('account.login');
     }
 
+    public function register()
+    {
+        return view('account.registrasi');
+    }
+
+    public function loginProcess(Request $request)
+    {
+        // Validasi input
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // Cari user berdasarkan email
+        $user = User::where('email', $request->input('email'))->first();
+
+        // Cek password
+        if ($user && Hash::check($request->input('password'), $user->password)) {
+            // Login sukses
+            Auth::login($user);
+            return redirect()->intended(route('tampilPegawai'));
+        } else {
+            // Login gagal
+            return redirect()->back()->with('error', 'Email atau password salah');
+        }
+    }
+
+    public function registerProcess(Request $request)
+    {
+        // Validasi input
+        $validator = Validator::make($request->all(), [
+            'username' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|confirmed',
+            'role' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // Buat user baru
+        $user = new User();
+        $user->username = $request->input('username');
+        $user->email = $request->input('email');
+        $user->password = Hash::make($request->input('password'));
+        $user->role = $request->input('role');
+        $user->save();
+
+        // Login sukses
+        Auth::login($user);
+        return redirect()->intended(route('tampilPegawai'));
+    }
+
     public function logout(Request $request)
     {
         Auth::logout();
-        return redirect('/login');
+        return redirect()->route('login');
     }
 }

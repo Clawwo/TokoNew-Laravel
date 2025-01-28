@@ -7,9 +7,11 @@ use App\Http\Controllers\BarangController;
 
 
 //Account
-Route::post('/login/process', [AuthController::class, 'loginProcess']);
-Route::get('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout']);
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/loginprocess', [AuthController::class, 'loginProcess'])->name('loginProcess');
+Route::get('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/registerprocess', [AuthController::class, 'registerProcess'])->name('registerProcess');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 //pelanggan
 Route::post('/kasir/add/tambahpelangganproces', [HomeController::class, 'TambahPelangganproces'])->name('TambahPelangganproces');

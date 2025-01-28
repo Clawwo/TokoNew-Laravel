@@ -38,3 +38,5 @@ return new class extends Migration
         Schema::dropIfExists('detail_penjualan');
     }
 };
+
+
