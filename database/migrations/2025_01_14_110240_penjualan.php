@@ -13,19 +13,21 @@ return new class extends Migration
     {
         Schema::create('penjualan', function (Blueprint $table) {
             $table->increments('id_transaksi');
-            $table->integer('id_pelanggan');
+            $table->unsignedInteger('id_pelanggan');
             $table->date('tgl_transaksi');
-            $table->integer('total_transaksi');
+            $table->decimal('total_transaksi', 10, 2);
             $table->timestamps();
         });
 
         Schema::create('detail_penjualan', function (Blueprint $table) {
             $table->increments('id_transaksi_detail');
-            $table->integer('id_transaksi');
-            $table->integer('id_barang');
+            $table->unsignedInteger('id_transaksi');
+            $table->unsignedInteger('id_barang');
             $table->integer('jml_barang');
-            $table->integer('harga_satuan');
+            $table->decimal('harga_satuan', 10, 2);
             $table->timestamps();
+
+            $table->foreign('id_transaksi')->references('id_transaksi')->on('penjualan')->onDelete('cascade');
         });
     }
 
