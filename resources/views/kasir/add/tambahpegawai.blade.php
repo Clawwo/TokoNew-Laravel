@@ -19,6 +19,11 @@
         </div>
 
         <div class="mb-4 sm:mb-8">
+          <label for="hs-feedback-post-comment-name-1" class="block mb-2 text-sm font-medium dark:text-white">Email</label>
+          <input type="email" id="hs-feedback-post-comment-name-1" class="block w-full px-4 py-3 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Enter Email" name="email" autocomplete="off">
+        </div>
+
+        <div class="mb-4 sm:mb-8">
           <label for="hs-feedback-post-comment-email-1" class="block mb-2 text-sm font-medium dark:text-white">Password</label>
           <input type="password" id="hs-feedback-post-comment-email-1" class="block w-full px-4 py-3 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Enter Password" name="password">
         </div>

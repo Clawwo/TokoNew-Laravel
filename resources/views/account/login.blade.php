@@ -27,7 +27,7 @@
                                     class="block w-full px-4 py-3 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                                     required aria-describedby="email-error" form-control
                                     @error('email') is-invalid @enderror value="{{ old('email') }}" required
-                                    autocomplete="email" autofocus placeholder="Examples@gmail.com">
+                                    autocomplete="off" autofocus placeholder="Examples@gmail.com">
                                 <div class="absolute inset-y-0 hidden pointer-events-none end-0 pe-3">
                                     <svg class="text-red-500 size-5" width="16" height="16" fill="currentColor"
                                         viewBox="0 0 16 16" aria-hidden="true">

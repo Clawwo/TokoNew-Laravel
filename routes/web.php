@@ -7,7 +7,7 @@ use App\Http\Controllers\BarangController;
 
 
 //Account
-Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/', [AuthController::class, 'login'])->name('login');
 Route::post('/loginprocess', [AuthController::class, 'loginProcess'])->name('loginProcess');
 Route::get('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/registerprocess', [AuthController::class, 'registerProcess'])->name('registerProcess');

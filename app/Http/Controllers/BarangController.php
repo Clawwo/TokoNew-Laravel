@@ -6,6 +6,7 @@ use App\Models\Barang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
+
 class BarangController extends Controller
 {
     public function tampilBarang()
@@ -98,4 +99,6 @@ class BarangController extends Controller
         $barang->delete();
         return redirect()->route('tampilBarang');
     }
+
+    
 }

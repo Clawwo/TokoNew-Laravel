@@ -73,6 +73,14 @@
                                                 </span>
                                             </div>
                                         </th>
+                                        {{-- <th scope="col" class="py-3 ml-6 ps-6 lg:ps-3 xl:ps-0 pe-6 text-start">
+                                            <div class="flex items-center gap-x-2">
+                                                <span
+                                                    class="text-xs font-semibold tracking-wide text-gray-800 uppercase dark:text-neutral-200">
+                                                    Email
+                                                </span>
+                                            </div>
+                                        </th> --}}
 
                                         <th scope="col" class="px-6 py-3 text-start">
                                             <div class="flex items-center gap-x-2">
@@ -130,6 +138,16 @@
                                                     </div>
                                                 </div>
                                             </td>
+                                            {{-- <td class="size-px whitespace-nowrap">
+                                                <div class="py-3 ps-6 lg:ps-3 xl:ps-0 pe-6">
+                                                    <div class="flex items-center gap-x-3">
+                                                        <div class="grow">
+                                                            <span
+                                                                class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">{{ $pgw->email }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td> --}}
                                             <td class="h-px w-72 whitespace-nowrap">
                                                 <div class="px-6 py-3">
                                                     <span

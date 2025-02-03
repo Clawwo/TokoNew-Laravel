@@ -58,11 +58,14 @@ class HomeController extends Controller
     public function tambahPegawaiProces(Request $request)
     {
         $username = $request->input('username');
-        $password = $request->input('password');
+        $email = $request->input('email');
+        $password = bcrypt($request->input('password'));
 
         $pegawai = new User();
         $pegawai->username = $username;
+        $pegawai->email = $email;
         $pegawai->password = $password;
+        $pegawai->role = 'pegawai';
         $pegawai->save();
 
         return redirect()->route('tampilPegawai')->with('success', 'Data berhasil disimpan');
