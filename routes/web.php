@@ -39,7 +39,7 @@ Route::patch('/kasir/barang/{id_barang}', [BarangController::class, 'updateBaran
 
 //penjualan
 Route::get('/transaksi', [PenjualanController::class, 'create'])->name('transaksi.create');
-Route::post('/transaksi', [PenjualanController::class, 'store'])->name('simpanTransaksi');
+Route::post('/transaksiprocess', [PenjualanController::class, 'store'])->name('simpanTransaksi');
 Route::get('/barang/{id_barang}', [PenjualanController::class, 'getBarang'])->name('getBarang');
 
 

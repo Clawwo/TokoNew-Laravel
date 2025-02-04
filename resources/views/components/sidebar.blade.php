@@ -200,7 +200,7 @@
                     </li>
 
                     <li class="hs-accordion" id="projects-accordion">
-                        <a href="{{ route('tambahTransaksi') }}"
+                        <a href="{{ route('transaksi.create') }}"
                             class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none  dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:text-neutral-200 dark:hover:text-neutral-300"
                             aria-expanded="true" aria-controls="projects-accordion-child">
                             <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
