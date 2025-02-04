@@ -2,71 +2,76 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Penjualan;
 use App\Models\DetailPenjualan;
-use Illuminate\Http\Request;
+use App\Models\Pelanggan;
+use App\Models\Barang;
 use Illuminate\Support\Facades\DB;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 class PenjualanController extends Controller
 {
-    // Menampilkan form transaksi
-    public function tambahTransaksi()
+    public function create()
     {
-        return view('kasir.transaksi');
+        $pelanggan = Pelanggan::all();
+        $barang = Barang::all();
+        return view('kasir.transaksi', compact('pelanggan', 'barang'));
     }
 
-    // Menyimpan transaksi
-    public function simpanTransaksi(Request $request)
+    public function getBarang($id_barang)
     {
-        $request->validate([
-            'id_pelanggan' => 'required|exists:pelanggan,id_pelanggan',
-            'tgl_transaksi' => 'required|date',
-            'items' => 'required|array',
-            'items.*.id_barang' => 'required|exists:barang,id_barang',
-            'items.*.jml_barang' => 'required|integer|min:1',
-            'items.*.harga_satuan' => 'required|numeric|min:0',
-        ]);
+        $barang = Barang::find($id_barang);
+        return response()->json($barang);
+    }
 
+    public function store(Request $request)
+    {
         DB::beginTransaction();
-
         try {
-            // Hitung total transaksi
-            $totalTransaksi = collect($request->items)->sum(function ($item) {
-                return $item['jml_barang'] * $item['harga_satuan'];
-            });
+            // Cek apakah pelanggan terdaftar
+            $pelanggan = Pelanggan::find($request->id_pelanggan);
+            $isMember = $pelanggan ? true : false;
 
-            // Simpan data penjualan
+            // Simpan transaksi
             $penjualan = Penjualan::create([
                 'id_pelanggan' => $request->id_pelanggan,
-                'tgl_transaksi' => $request->tgl_transaksi,
-                'total_transaksi' => $totalTransaksi,
+                'tgl_transaksi' => now(),
+                'total_transaksi' => 0, // Akan diperbarui nanti
             ]);
 
-            // Simpan detail penjualan
-            foreach ($request->items as $item) {
-                DetailPenjualan::create([
-                    'id_transaksi' => $penjualan->id_transaksi,
-                    'id_barang' => $item['id_barang'],
-                    'jml_barang' => $item['jml_barang'],
-                    'harga_satuan' => $item['harga_satuan'],
-                ]);
+            $totalHarga = 0;
+
+            foreach ($request->barang as $item) {
+                $barang = Barang::find($item['id_barang']);
+
+                if ($barang) {
+                    $subtotal = $barang->harga_barang * $item['jml_barang'];
+                    $totalHarga += $subtotal;
+
+                    // Simpan detail penjualan
+                    DetailPenjualan::create([
+                        'id_transaksi' => $penjualan->id_transaksi,
+                        'id_barang' => $barang->id_barang,
+                        'jml_barang' => $item['jml_barang'],
+                        'harga_satuan' => $barang->harga_barang,
+                    ]);
+                }
             }
+
+            // Jika pelanggan terdaftar, berikan diskon 10%
+            $diskon = $isMember ? ($totalHarga * 0.1) : 0;
+            $totalAkhir = $totalHarga - $diskon;
+
+            // Update total transaksi
+            $penjualan->update(['total_transaksi' => $totalAkhir]);
 
             DB::commit();
 
-            return redirect()->route('invoice', $penjualan->id_transaksi)->with('success', 'Transaksi berhasil dibuat!');
+            return redirect()->route('transaksi.create')->with('success', 'Transaksi berhasil! Total: ' . number_format($totalAkhir, 2) . ($isMember ? ' (Diskon 10%)' : ' (Tanpa Diskon)'));
+
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->withErrors('Transaksi gagal: ' . $e->getMessage());
+            return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
-
-    // Generate Invoice
-    // public function invoice($id_transaksi)
-    // {
-    //     $penjualan = Penjualan::with('detailPenjualan')->findOrFail($id_transaksi);
-    //     $pdf = Pdf::loadView('invoice', compact('penjualan'));
-    //     return $pdf->download('invoice-' . $penjualan->id_transaksi . '.pdf');
-    // }
 }

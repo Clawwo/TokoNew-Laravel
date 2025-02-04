@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\PenjualanController;
+use Illuminate\Support\Facades\App;
 
 Route::middleware(['guest'])->group(function () {
 });
@@ -37,9 +38,10 @@ Route::get('/kasir/barang/{id_barang}/edit', [BarangController::class, 'editBara
 Route::patch('/kasir/barang/{id_barang}', [BarangController::class, 'updateBarang'])->name('updateBarang');
 
 //penjualan
-Route::get('/transaksi/tambahTransaksi', [PenjualanController::class, 'tambahTransaksi'])->name('tambahTransaksi');
-Route::post('/transaksi/simpanTransaksi', [PenjualanController::class, 'simpanTransaksi'])->name('simpanTransaksi');
-Route::get('/barang/{id_barang}', [BarangController::class, 'ambilBarang'])->name('ambilBarang');
+Route::get('/transaksi', [PenjualanController::class, 'create'])->name('transaksi.create');
+Route::post('/transaksi', [PenjualanController::class, 'store'])->name('simpanTransaksi');
+Route::get('/barang/{id_barang}', [PenjualanController::class, 'getBarang'])->name('getBarang');
+
 
 
 Route::middleware(['auth'])->group(function () {
