@@ -3,54 +3,61 @@
 @section('content')
     @include('components.sidebar')
     <div class="sm:ml-64">
-        <div class="container mt-5">
-            <h1 class="mb-4">Buat Transaksi Baru</h1>
-
+        <div class="container p-6 mx-auto dark:bg-gray-80 dark:border-gray-700">
             <!-- Form Transaksi -->
-            <form action="{{ route('simpanTransaksi') }}" method="POST">
+            <form action="{{ route('simpanTransaksi') }}" method="POST" class="p-6 bg-white rounded-lg shadow-md">
                 @csrf
 
                 <!-- Input Pelanggan -->
-                <div class="mb-3">
-                    <label for="id_pelanggan" class="form-label">ID Pelanggan</label>
-                    <input type="text" class="form-control" id="id_pelanggan" name="id_pelanggan" required>
+                <div class="mb-6">
+                    <label for="id_pelanggan" class="block text-sm font-medium text-gray-700">ID Pelanggan</label>
+                    <input type="text" id="id_pelanggan" name="id_pelanggan" required
+                           class="block w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
                 </div>
-
-                <!-- Input Tanggal Transaksi -->
-                <div class="mb-3">
-                    <label for="tgl_transaksi" class="form-label">Tanggal Transaksi</label>
-                    <input type="date" class="form-control" id="tgl_transaksi" name="tgl_transaksi" required>
-                </div>
-
                 <!-- Detail Barang -->
-                <div class="mb-3">
-                    <h4>Detail Barang</h4>
-                    <div id="items-container">
+                <div class="mb-6">
+                    <h4 class="mb-4 text-xl font-semibold text-gray-800">Detail Barang</h4>
+                    <div id="items-container" class="space-y-4">
                         <!-- Baris pertama untuk input barang -->
-                        <div class="mb-3 item-row">
-                            <div class="row">
-                                <div class="col">
-                                    <label for="id_barang" class="form-label">ID Barang</label>
-                                    <input type="text" class="form-control" name="items[0][id_barang]" required>
+                        <div class="p-4 rounded-lg shadow-sm item-row bg-gray-50">
+                            <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+                                <div>
+                                    <label for="id_barang" class="block text-sm font-medium text-gray-700">ID Barang</label>
+                                    <input type="text" name="items[0][id_barang]" required
+                                           class="block w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
                                 </div>
-                                <div class="col">
-                                    <label for="jml_barang" class="form-label">Jumlah Barang</label>
-                                    <input type="number" class="form-control" name="items[0][jml_barang]" required>
+                                <div>
+                                    <label for="harga_satuan" class="block text-sm font-medium text-gray-700">Nama Barang</label>
+                                    <input type="text" name="items[0][nama_barang]" required
+                                           class="block w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
                                 </div>
-                                <div class="col">
-                                    <label for="harga_satuan" class="form-label">Harga Satuan</label>
-                                    <input type="number" class="form-control" name="items[0][harga_satuan]" required>
+                                <div>
+                                    <label for="harga_satuan" class="block text-sm font-medium text-gray-700">Harga</label>
+                                    <input type="number" name="items[0][harga_satuan]" required
+                                           class="block w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
                                 </div>
+                                <div>
+                                    <label for="jml_barang" class="block text-sm font-medium text-gray-700">Jumlah Barang</label>
+                                    <input type="number" name="items[0][jml_barang]" required
+                                           class="block w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                </div>
+
                             </div>
                         </div>
                     </div>
 
                     <!-- Tombol untuk menambah barang -->
-                    <button type="button" class="btn btn-secondary" id="add-item">Tambah Barang</button>
+                    <button type="button" id="add-item" class="w-full px-4 py-2 mt-4 text-white bg-indigo-600 rounded-md md:w-auto hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        Tambah Barang
+                    </button>
                 </div>
 
                 <!-- Tombol Submit -->
-                <button type="submit" class="btn btn-primary">Simpan Transaksi</button>
+                <div class="text-center">
+                    <button type="submit" class="px-6 py-2 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+                        Simpan Transaksi
+                    </button>
+                </div>
             </form>
         </div>
     </div>
@@ -63,21 +70,29 @@
             const container = document.getElementById('items-container');
 
             const newItemRow = document.createElement('div');
-            newItemRow.classList.add('item-row', 'mb-3');
+            newItemRow.classList.add('item-row', 'bg-gray-50', 'p-4', 'rounded-lg', 'shadow-sm', 'mt-4');
 
             newItemRow.innerHTML = `
-                <div class="row">
-                    <div class="col">
-                        <label for="id_barang" class="form-label">ID Barang</label>
-                        <input type="text" class="form-control" name="items[${itemIndex}][id_barang]" required>
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+                    <div>
+                        <label for="id_barang" class="block text-sm font-medium text-gray-700">ID Barang</label>
+                        <input type="text" name="items[${itemIndex}][id_barang]"
+                               class="block w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
                     </div>
-                    <div class="col">
-                        <label for="jml_barang" class="form-label">Jumlah Barang</label>
-                        <input type="number" class="form-control" name="items[${itemIndex}][jml_barang]" required>
+                    <div>
+                        <label for="jml_barang" class="block text-sm font-medium text-gray-700">Nama Barang</label>
+                        <input type="number" name="items[${itemIndex}][nama_barang]"
+                               class="block w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
                     </div>
-                    <div class="col">
-                        <label for="harga_satuan" class="form-label">Harga Satuan</label>
-                        <input type="number" class="form-control" name="items[${itemIndex}][harga_satuan]" required>
+                    <div>
+                        <label for="harga_satuan" class="block text-sm font-medium text-gray-700">Harga Satuan</label>
+                        <input type="number" name="items[${itemIndex}][harga_satuan]"
+                               class="block w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label for="jml_barang" class="block text-sm font-medium text-gray-700">Jumlah Barang</label>
+                        <input type="number" name="items[${itemIndex}][jml_barang]"
+                               class="block w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
                     </div>
                 </div>
             `;

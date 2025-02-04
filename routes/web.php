@@ -39,6 +39,7 @@ Route::patch('/kasir/barang/{id_barang}', [BarangController::class, 'updateBaran
 //penjualan
 Route::get('/transaksi/tambahTransaksi', [PenjualanController::class, 'tambahTransaksi'])->name('tambahTransaksi');
 Route::post('/transaksi/simpanTransaksi', [PenjualanController::class, 'simpanTransaksi'])->name('simpanTransaksi');
+Route::get('/barang/{id_barang}', [BarangController::class, 'ambilBarang'])->name('ambilBarang');
 
 
 Route::middleware(['auth'])->group(function () {

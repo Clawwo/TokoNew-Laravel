@@ -1,123 +1,89 @@
 @extends('layouts.main')
 
 @section('content')
-    <div
-        class="w-4/12 mx-auto border border-gray-200 shadow-sm relativebg-white rounded-xl dark:bg-neutral-900 dark:border-neutral-700 mt-36">
-        <div class="p-4 sm:p-7">
-            <div class="mb-6 text-center">
-                <h1 class="block mb-3 text-3xl font-bold text-gray-800 dark:text-white">Sign in</h1>
-                <p class="mt-2 text-sm text-gray-600 dark:text-neutral-400">
-                    Don't have an account yet?
-                    <a class="font-medium text-blue-600 decoration-2 hover:underline focus:outline-none focus:underline dark:text-blue-500"
-                        href="{{ route('register') }}">
-                        Sign up here
-                    </a>
-                </p>
-            </div>
+    @include('components.sidebar')
+    <div class="sm:ml-64">
+        <div class="container mt-5">
+            <h1 class="mb-4">Buat Transaksi Baru</h1>
 
-            <div class="mt-5">
-                <!-- Form -->
-                <form method="POST" action="{{ route('registerProcess') }}">
-                    @csrf
-                    <div class="grid gap-y-4">
-                        <!-- Form Group -->
-                        <div class="mb-6">
-                            <label for="username" class="block mb-3 text-sm dark:text-white">Email address</label>
-                            <div class="relative">
-                                <input type="text" id="username" name="username"
-                                    class="block w-full px-4 py-3 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                                    required aria-describedby="email-error" form-control
-                                    @error('username') is-invalid @enderror value="{{ old('username') }}" required
-                                    autocomplete="off" autofocus>
-                                <div class="absolute inset-y-0 hidden pointer-events-none end-0 pe-3">
-                                    <svg class="text-red-500 size-5" width="16" height="16" fill="currentColor"
-                                        viewBox="0 0 16 16" aria-hidden="true">
-                                        <path
-                                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                                    </svg>
-                                </div>
-                            </div>
-                            @error('username')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="mb-6">
-                            <label for="email" class="block mb-3 text-sm dark:text-white">Email address</label>
-                            <div class="relative">
-                                <input type="email" id="email" name="email"
-                                    class="block w-full px-4 py-3 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                                    required aria-describedby="email-error" @error('email') is-invalid @enderror
-                                    name="email" value="{{ old('email') }}" required autocomplete="email">
-                                <div class="absolute inset-y-0 hidden pointer-events-none end-0 pe-3">
-                                    <svg class="text-red-500 size-5" width="16" height="16" fill="currentColor"
-                                        viewBox="0 0 16 16" aria-hidden="true">
-                                        <path
-                                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                                    </svg>
-                                </div>
-                            </div>
-                            @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                        <!-- End Form Group -->
+            <!-- Form Transaksi -->
+            <form action="{{ route('simpanTransaksi') }}" method="POST">
+                @csrf
 
-                        <!-- Form Group -->
-                        <div class="mb-4">
-                            <div class="relative mb-8 ">
-                                <label for="password" class="block mb-3 text-sm dark:text-white">Password</label>
-                                <input type="password" id="password" name="password"
-                                    class="block w-full px-4 py-3 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                                    required aria-describedby="password-error @error('password') is-invalid @enderror"
-                                    name="password" required autocomplete="off">
-                                <div class="absolute inset-y-0 hidden pointer-events-none end-0 pe-3">
-                                    <svg class="text-red-500 size-5" width="16" height="16" fill="currentColor"
-                                        viewBox="0 0 16 16" aria-hidden="true">
-                                        <path
-                                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                                    </svg>
+                <!-- Input Pelanggan -->
+                <div class="mb-3">
+                    <label for="id_pelanggan" class="form-label">ID Pelanggan</label>
+                    <input type="text" class="form-control" id="id_pelanggan" name="id_pelanggan" required>
+                </div>
+
+                <!-- Input Tanggal Transaksi -->
+                <div class="mb-3">
+                    <label for="tgl_transaksi" class="form-label">Tanggal Transaksi</label>
+                    <input type="date" class="form-control" id="tgl_transaksi" name="tgl_transaksi" required>
+                </div>
+
+                <!-- Detail Barang -->
+                <div class="mb-3">
+                    <h4>Detail Barang</h4>
+                    <div id="items-container">
+                        <!-- Baris pertama untuk input barang -->
+                        <div class="mb-3 item-row">
+                            <div class="row">
+                                <div class="col">
+                                    <label for="id_barang" class="form-label">ID Barang</label>
+                                    <input type="text" class="form-control" name="items[0][id_barang]" required>
+                                </div>
+                                <div class="col">
+                                    <label for="jml_barang" class="form-label">Jumlah Barang</label>
+                                    <input type="number" class="form-control" name="items[0][jml_barang]" required>
+                                </div>
+                                <div class="col">
+                                    <label for="harga_satuan" class="form-label">Harga Satuan</label>
+                                    <input type="number" class="form-control" name="items[0][harga_satuan]" required>
                                 </div>
                             </div>
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
                         </div>
-                        <div class="mb-4">
-                            <div class="relative mb-8 ">
-                                <label for="password" class="block mb-3 text-sm dark:text-white">Confirm Password</label>
-                                <input type="password" id="password-confirm" name="password_confirmation"
-                                    class="block w-full px-4 py-3 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                                    required aria-describedby="password-error @error('password') is-invalid @enderror"
-                                     required autocomplete="off">
-                                <div class="absolute inset-y-0 hidden pointer-events-none end-0 pe-3">
-                                    <svg class="text-red-500 size-5" width="16" height="16" fill="currentColor"
-                                        viewBox="0 0 16 16" aria-hidden="true">
-                                        <path
-                                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                                    </svg>
-                                </div>
-                            </div>
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                        <!-- End Form Group -->
                     </div>
-                    <button type="submit"
-                        class="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-lg gap-x-2 hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">Sign
-                        in</button>
-            </div>
+
+                    <!-- Tombol untuk menambah barang -->
+                    <button type="button" class="btn btn-secondary" id="add-item">Tambah Barang</button>
+                </div>
+
+                <!-- Tombol Submit -->
+                <button type="submit" class="btn btn-primary">Simpan Transaksi</button>
             </form>
-            <!-- End Form -->
         </div>
     </div>
-    </div>
+
+    <!-- Script untuk menambah barang -->
+    <script>
+        let itemIndex = 1;
+
+        document.getElementById('add-item').addEventListener('click', function() {
+            const container = document.getElementById('items-container');
+
+            const newItemRow = document.createElement('div');
+            newItemRow.classList.add('item-row', 'mb-3');
+
+            newItemRow.innerHTML = `
+                <div class="row">
+                    <div class="col">
+                        <label for="id_barang" class="form-label">ID Barang</label>
+                        <input type="text" class="form-control" name="items[${itemIndex}][id_barang]" required>
+                    </div>
+                    <div class="col">
+                        <label for="jml_barang" class="form-label">Jumlah Barang</label>
+                        <input type="number" class="form-control" name="items[${itemIndex}][jml_barang]" required>
+                    </div>
+                    <div class="col">
+                        <label for="harga_satuan" class="form-label">Harga Satuan</label>
+                        <input type="number" class="form-control" name="items[${itemIndex}][harga_satuan]" required>
+                    </div>
+                </div>
+            `;
+
+            container.appendChild(newItemRow);
+            itemIndex++;
+        });
+    </script>
 @endsection
