@@ -83,6 +83,8 @@
                                         data.harga_barang);
                                     parent.querySelector('.harga-satuan').setAttribute(
                                         'data-harga', data.harga_barang);
+                                    parent.querySelector('.jumlah').setAttribute('max', data
+                                        .stock); // Set max to available stock
                                     updateSubtotal(parent);
                                 } else {
                                     parent.querySelector('.nama-barang').value = '';
@@ -125,12 +127,12 @@
                 newItem.classList.add('grid', 'grid-cols-5', 'gap-4', 'items-center', 'barang-item',
                     'bg-neutral-800', 'p-4', 'rounded', 'border', 'dark:border-neutral-700');
                 newItem.innerHTML = `
-                    <input type="text" name="barang[${barangIndex}][id_barang]" class="p-2 border id-barang dark:text-neutral-200 dark:bg-neutral-800 dark:border-neutral-700" placeholder="ID Barang" autocomplete="off">
-                    <input type="text" class="p-2 border nama-barang dark:text-neutral-200 dark:bg-neutral-800 dark:border-neutral-700" placeholder="Nama Barang" readonly>
-                    <input type="text" class="p-2 border harga-satuan dark:text-neutral-200 dark:bg-neutral-800 dark:border-neutral-700" placeholder="Harga Satuan" readonly data-harga="0">
-                    <input type="number" name="barang[${barangIndex}][jml_barang]" class="p-2 border jumlah dark:text-neutral-200 dark:bg-neutral-800 dark:border-neutral-700" min="1" value="1">
-                    <h3 class="font-semibold text-right subtotal dark:text-neutral-200"></h3>
-                `;
+            <input type="text" name="barang[${barangIndex}][id_barang]" class="p-2 border id-barang dark:text-neutral-200 dark:bg-neutral-800 dark:border-neutral-700" placeholder="ID Barang" autocomplete="off">
+            <input type="text" class="p-2 border nama-barang dark:text-neutral-200 dark:bg-neutral-800 dark:border-neutral-700" placeholder="Nama Barang" readonly>
+            <input type="text" class="p-2 border harga-satuan dark:text-neutral-200 dark:bg-neutral-800 dark:border-neutral-700" placeholder="Harga Satuan" readonly data-harga="0">
+            <input type="number" name="barang[${barangIndex}][jml_barang]" class="p-2 border jumlah dark:text-neutral-200 dark:bg-neutral-800 dark:border-neutral-700" min="1" value="1">
+            <h3 class="font-semibold text-right subtotal dark:text-neutral-200"></h3>
+        `;
                 container.appendChild(newItem);
                 updateBarangListener();
                 barangIndex++;

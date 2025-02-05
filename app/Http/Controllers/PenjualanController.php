@@ -44,7 +44,7 @@ class PenjualanController extends Controller
             foreach ($request->barang as $item) {
                 $barang = Barang::find($item['id_barang']);
 
-                if ($barang) {
+                if ($barang && $barang->stock >= $item['jml_barang']) {
                     $subtotal = $barang->harga_barang * $item['jml_barang'];
                     $totalHarga += $subtotal;
 
@@ -55,6 +55,14 @@ class PenjualanController extends Controller
                         'jml_barang' => $item['jml_barang'],
                         'harga_satuan' => $barang->harga_barang,
                     ]);
+
+                    // Kurangi stok barang
+                    $barang->stock -= $item['jml_barang'];
+                    $barang->save();
+                } else {
+                    // Jika stok tidak cukup
+                    DB::rollBack();
+                    return back()->with('error', 'Stok barang tidak cukup.');
                 }
             }
 
@@ -68,7 +76,6 @@ class PenjualanController extends Controller
             DB::commit();
 
             return redirect()->route('transaksi.create')->with('success', 'Transaksi berhasil! Total: ' . number_format($totalAkhir, 2) . ($isMember ? ' (Diskon 10%)' : ' (Tanpa Diskon)'));
-
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
