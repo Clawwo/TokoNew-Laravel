@@ -12,6 +12,11 @@ class Penjualan extends Model
 
     public function detailPenjualan()
     {
-        return $this->hasMany(DetailPenjualan::class, 'id_transaksi');
+        return $this->hasMany(DetailPenjualan::class, 'id_transaksi', 'id_transaksi');
+    }
+
+    public function pelanggan()
+    {
+        return $this->belongsTo(Pelanggan::class, 'id_pelanggan', 'id_pelanggan');
     }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth dark snap-none snap-align-none">
 
 <head>
     <meta charset="UTF-8">
@@ -13,6 +13,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
+
+    <style>
+        * {
+            scrollbar-width: none;
+        }
+    </style>
 
     <title>TokoNew</title>
 </head>

@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\PenjualanController;
+use App\Models\Penjualan;
 use Illuminate\Support\Facades\App;
 
 Route::middleware(['guest'])->group(function () {
@@ -41,8 +42,7 @@ Route::patch('/kasir/barang/{id_barang}', [BarangController::class, 'updateBaran
 Route::get('/transaksi', [PenjualanController::class, 'create'])->name('transaksi.create');
 Route::post('/transaksiprocess', [PenjualanController::class, 'store'])->name('simpanTransaksi');
 Route::get('/barang/{id_barang}', [PenjualanController::class, 'getBarang'])->name('getBarang');
-
-
+Route::get('/invoice/riwayat', [PenjualanController::class, 'riwayatInvoice'])->name('riwayatInvoice');
 
 Route::middleware(['auth'])->group(function () {
 

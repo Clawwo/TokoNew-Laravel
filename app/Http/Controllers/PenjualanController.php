@@ -8,6 +8,7 @@ use App\Models\DetailPenjualan;
 use App\Models\Pelanggan;
 use App\Models\Barang;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\PDF;
 
 class PenjualanController extends Controller
 {
@@ -44,7 +45,7 @@ class PenjualanController extends Controller
             foreach ($request->barang as $item) {
                 $barang = Barang::find($item['id_barang']);
 
-                if ($barang && $barang->stock >= $item['jml_barang']) {
+                if ($barang) {
                     $subtotal = $barang->harga_barang * $item['jml_barang'];
                     $totalHarga += $subtotal;
 
@@ -55,16 +56,10 @@ class PenjualanController extends Controller
                         'jml_barang' => $item['jml_barang'],
                         'harga_satuan' => $barang->harga_barang,
                     ]);
-
-                    // Kurangi stok barang
-                    $barang->stock -= $item['jml_barang'];
-                    $barang->save();
-                } else {
-                    // Jika stok tidak cukup
-                    DB::rollBack();
-                    return back()->with('error', 'Stok barang tidak cukup.');
                 }
             }
+
+
 
             // Jika pelanggan terdaftar, berikan diskon 10%
             $diskon = $isMember ? ($totalHarga * 0.1) : 0;
@@ -75,10 +70,43 @@ class PenjualanController extends Controller
 
             DB::commit();
 
-            return redirect()->route('transaksi.create')->with('success', 'Transaksi berhasil! Total: ' . number_format($totalAkhir, 2) . ($isMember ? ' (Diskon 10%)' : ' (Tanpa Diskon)'));
+            return redirect()->route('transaksi.create')->with([
+                'success' => 'Rp. ' . number_format($totalAkhir, 2) . ($isMember ? ' (Diskon 10%)' : ' '),
+                'tanggal_transaksi' => $penjualan->tgl_transaksi->format('d F Y'),
+                'items' => collect($request->barang)->map(function ($item) {
+                    $barang = Barang::find($item['id_barang']);
+                    return [
+                        'nama_barang' => $barang->nama_barang,
+                        'jumlah' => $item['jml_barang'],
+                        'harga_satuan' => $barang->harga_barang,
+                        'total_harga' => $barang->harga_barang * $item['jml_barang']
+                    ];
+                })->toArray()
+            ]);
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
+    }
+
+    // public function invoice($id_transaksi)
+    // {
+    //     $penjualan = Penjualan::find($id_transaksi);
+    //     $detailPenjualan = DetailPenjualan::where('id_transaksi', $id_transaksi)->get();
+
+    //     // Buat data invoice
+    //     $invoice = [
+    //         'penjualan' => $penjualan,
+    //         'detailPenjualan' => $detailPenjualan,
+    //     ];
+
+    //     // Tampilkan invoice pada halaman transaksi
+    //     return view('kasir.transaksi', compact('invoice'));
+    // }
+
+    public function riwayatInvoice(){
+        $penjualan = Penjualan::with(['pelanggan'])->get();
+
+        return view('kasir.riwayat_invoice', compact('penjualan'));
     }
 }

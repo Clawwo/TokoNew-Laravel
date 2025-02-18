@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('penjualan', function (Blueprint $table) {
             $table->increments('id_transaksi');
-            $table->unsignedInteger('id_pelanggan');
+            $table->unsignedInteger('id_pelanggan')->nullable();
             $table->date('tgl_transaksi');
             $table->decimal('total_transaksi', 10, 2);
             $table->timestamps();
