@@ -104,7 +104,8 @@ class PenjualanController extends Controller
     //     return view('kasir.transaksi', compact('invoice'));
     // }
 
-    public function riwayatInvoice(){
+    public function riwayatInvoice()
+    {
         $penjualan = Penjualan::with(['pelanggan'])->get();
 
         return view('kasir.riwayat_invoice', compact('penjualan'));

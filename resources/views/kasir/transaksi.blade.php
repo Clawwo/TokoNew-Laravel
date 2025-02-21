@@ -203,7 +203,8 @@
                             class="px-4 py-2 mr-4 text-white bg-blue-600 rounded hover:bg-blue-700">Tambah
                             Barang</button>
                         <button type="submit" class="px-4 py-2 text-white bg-green-600 rounded" aria-haspopup="dialog"
-                            aria-expanded="false" aria-controls="hs-ai-modal" data-hs-overlay="#hs-ai-modal">Simpan
+                            aria-expanded="false" aria-controls="hs-ai-modal" data-hs-overlay="#hs-ai-modal"
+                            id="open-modal-button">Simpan
                             Transaksi</button>
                     </div>
                     <h3 class="ml-4 text-xl font-semibold dark:text-neutral-200">Total Harga: <span id="total-harga">Rp.
@@ -348,6 +349,21 @@
                     })
                     .catch(error => console.error('Error:', error));
             });
+        });
+
+        document.getElementById('open-modal-button').addEventListener('click', function() {
+            // Tunggu hingga modal benar-benar terlihat
+            let modal = document.getElementById('hs-ai-modal');
+
+            // Periksa secara berkala apakah modal sudah terbuka
+            let checkModalOpen = setInterval(function() {
+                if (!modal.classList.contains('hidden')) {
+                    clearInterval(checkModalOpen); // Hentikan interval
+                    setTimeout(function() {
+                        window.print(); // Cetak setelah modal benar-benar muncul
+                    }, 500); // Tambahkan jeda untuk memastikan tampilan modal stabil sebelum mencetak
+                }
+            }, 100);
         });
 
         $(document).ready(function() {

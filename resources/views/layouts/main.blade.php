@@ -18,14 +18,18 @@
         * {
             scrollbar-width: none;
         }
+
+
     </style>
 
     <title>TokoNew</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body class="font-poppins dark:bg-neutral-800">
-        @yield('content')
-    <script src="./node_modules/preline/dist/preline.js"></script>
+    @yield('content')
 </body>
+<script src="./node_modules/preline/dist/preline.js"></script>
+<script src="/resources/js/app.js"></script>
 
 </html>
