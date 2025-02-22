@@ -19,7 +19,40 @@
             scrollbar-width: none;
         }
 
+        @media print {
+            body * {
+                visibility: hidden;
+            }
 
+            #hs-ai-modal,
+            #hs-ai-modal * {
+                visibility: visible;
+            }
+
+            #hs-ai-modal {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                background-color: white !important;
+                color: black !important;
+            }
+
+            #hs-ai-modal button,
+            #hs-ai-modal .close-button {
+                display: none;
+            }
+
+            #hs-ai-modal .text-white,
+            #hs-ai-modal .text-gray-300,
+            #hs-ai-modal .text-gray-400 {
+                color: black !important;
+            }
+
+            #hs-ai-modal .bg-gray-900 {
+                background-color: white !important;
+            }
+        }
     </style>
 
     <title>TokoNew</title>
@@ -29,7 +62,5 @@
 <body class="font-poppins dark:bg-neutral-800">
     @yield('content')
 </body>
-<script src="./node_modules/preline/dist/preline.js"></script>
-<script src="/resources/js/app.js"></script>
 
 </html>
