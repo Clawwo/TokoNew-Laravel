@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     {{-- Tab and Tailwinds --}}
@@ -34,33 +35,19 @@
                 left: 0;
                 top: 0;
                 width: 100%;
-                background-color: white !important;
-                color: black !important;
-            }
-
-            #hs-ai-modal button,
-            #hs-ai-modal .close-button {
-                display: none;
-            }
-
-            #hs-ai-modal .text-white,
-            #hs-ai-modal .text-gray-300,
-            #hs-ai-modal .text-gray-400 {
-                color: black !important;
-            }
-
-            #hs-ai-modal .bg-gray-900 {
-                background-color: white !important;
+                height: auto;
+                background: white;
             }
         }
     </style>
 
+
     <title>TokoNew</title>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body class="font-poppins dark:bg-neutral-800">
     @yield('content')
+    <script src="{{ asset('js/transaksi.js') }}"></script>
 </body>
 
 </html>

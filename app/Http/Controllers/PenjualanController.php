@@ -49,6 +49,10 @@ class PenjualanController extends Controller
                     $subtotal = $barang->harga_barang * $item['jml_barang'];
                     $totalHarga += $subtotal;
 
+                    // Kurangi stok barang
+                    $barang->stock -= $item['jml_barang'];
+                    $barang->save();
+
                     // Simpan detail penjualan
                     DetailPenjualan::create([
                         'id_transaksi' => $penjualan->id_transaksi,
@@ -59,8 +63,6 @@ class PenjualanController extends Controller
                 }
             }
 
-
-
             // Jika pelanggan terdaftar, berikan diskon 10%
             $diskon = $isMember ? ($totalHarga * 0.1) : 0;
             $totalAkhir = $totalHarga - $diskon;
@@ -70,8 +72,9 @@ class PenjualanController extends Controller
 
             DB::commit();
 
-            return redirect()->route('transaksi.create')->with([
-                'success' => 'Rp. ' . number_format($totalAkhir, 2) . ($isMember ? ' (Diskon 10%)' : ' '),
+            return response()->json([
+                'success' => true,
+                'amount_paid' => 'Rp. ' . number_format($totalAkhir, 2) . ($isMember ? ' (Diskon 10%)' : ' '),
                 'tanggal_transaksi' => $penjualan->tgl_transaksi->format('d F Y'),
                 'items' => collect($request->barang)->map(function ($item) {
                     $barang = Barang::find($item['id_barang']);
@@ -85,29 +88,29 @@ class PenjualanController extends Controller
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ], 500);
         }
     }
-
-    // public function invoice($id_transaksi)
-    // {
-    //     $penjualan = Penjualan::find($id_transaksi);
-    //     $detailPenjualan = DetailPenjualan::where('id_transaksi', $id_transaksi)->get();
-
-    //     // Buat data invoice
-    //     $invoice = [
-    //         'penjualan' => $penjualan,
-    //         'detailPenjualan' => $detailPenjualan,
-    //     ];
-
-    //     // Tampilkan invoice pada halaman transaksi
-    //     return view('kasir.transaksi', compact('invoice'));
-    // }
 
     public function riwayatInvoice()
     {
         $penjualan = Penjualan::with(['pelanggan'])->get();
 
         return view('kasir.riwayat_invoice', compact('penjualan'));
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $penjualan = Penjualan::findOrFail($id);
+            $penjualan->delete();
+
+            return redirect()->route('riwayatInvoice')->with('success', 'Invoice berhasil dihapus.');
+        } catch (\Exception $e) {
+            return redirect()->route('riwayatInvoice')->with('error', 'Terjadi kesalahan saat menghapus invoice.');
+        }
     }
 }

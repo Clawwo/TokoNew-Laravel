@@ -8,8 +8,7 @@ use App\Http\Controllers\PenjualanController;
 use App\Models\Penjualan;
 use Illuminate\Support\Facades\App;
 
-Route::middleware(['guest'])->group(function () {
-});
+Route::middleware(['guest'])->group(function () {});
 
 //Account
 Route::get('/', [AuthController::class, 'login'])->name('login');
@@ -43,13 +42,6 @@ Route::get('/transaksi', [PenjualanController::class, 'create'])->name('transaks
 Route::post('/transaksiprocess', [PenjualanController::class, 'store'])->name('simpanTransaksi');
 Route::get('/barang/{id_barang}', [PenjualanController::class, 'getBarang'])->name('getBarang');
 Route::get('/invoice/riwayat', [PenjualanController::class, 'riwayatInvoice'])->name('riwayatInvoice');
+Route::delete('/penjualan/{id}', [PenjualanController::class, 'destroy'])->name('hapusInvoice');
 
-Route::middleware(['auth'])->group(function () {
-
-});
-
-
-
-
-
-
+Route::middleware(['auth'])->group(function () {});
