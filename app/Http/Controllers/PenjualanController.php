@@ -74,7 +74,7 @@ class PenjualanController extends Controller
 
             return response()->json([
                 'success' => true,
-                'amount_paid' => 'Rp. ' . number_format($totalAkhir, 2) . ($isMember ? ' (Diskon 10%)' : ' '),
+                'amount_paid' => 'Rp. ' . number_format($totalAkhir, 2) . ($isMember ? ' (-10%)' : ' '),
                 'tanggal_transaksi' => $penjualan->tgl_transaksi->format('d F Y'),
                 'items' => collect($request->barang)->map(function ($item) {
                     $barang = Barang::find($item['id_barang']);

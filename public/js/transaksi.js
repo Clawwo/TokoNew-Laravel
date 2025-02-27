@@ -97,25 +97,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     updateBarangListener();
 
-    document
-        .getElementById("id_pelanggan")
-        .addEventListener("change", function () {
-            let idPelanggan = this.value;
-            fetch(`/cek-pelanggan/${idPelanggan}`)
-                .then((response) => response.json())
-                .then((data) => {
-                    let statusDiv = document.getElementById("status-member");
-                    if (data.status === "member") {
-                        statusDiv.innerHTML =
-                            '<span class="text-green-500">Pelanggan Terdaftar (Mendapat Diskon)</span>';
-                    } else {
-                        statusDiv.innerHTML =
-                            '<span class="text-red-500">Pelanggan Tidak Terdaftar (Tanpa Diskon)</span>';
-                    }
-                })
-                .catch((error) => console.error("Error:", error));
-        });
-
     const submitButton = document.getElementById("submitTransaksi");
     if (submitButton) {
         submitButton.addEventListener("click", function () {
@@ -141,18 +122,19 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (data.success) {
                         console.log("Transaksi berhasil:", data);
 
-                        // Perbarui konten modal dengan data transaksi
+                        // Perbarui elemen dengan data yang diterima
                         const amountPaidElement =
                             document.querySelector(".amount-paid");
                         if (amountPaidElement) {
-                            amountPaidElement.textContent = data.amount_paid;
+                            amountPaidElement.textContent =
+                                data.amount_paid || "N/A";
                         }
 
                         const datePaidElement =
                             document.querySelector(".date-paid");
                         if (datePaidElement) {
                             datePaidElement.textContent =
-                                data.tanggal_transaksi;
+                                data.tanggal_transaksi || "N/A";
                         }
 
                         const itemList = document.querySelector(".item-list");
@@ -163,11 +145,9 @@ document.addEventListener("DOMContentLoaded", function () {
                             <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:border-neutral-700 dark:text-neutral-200">
                                 <div class="flex items-center justify-between w-full">
                                     <span>${item.nama_barang} (x${item.jumlah})</span>
-                                    <span>Rp ${item.total_harga}</span>
+                                    <span>Rp. ${item.total_harga}</span>
                                 </div>
                             </li>
-
-
                         `
                                 )
                                 .join("");
@@ -178,26 +158,18 @@ document.addEventListener("DOMContentLoaded", function () {
                         if (modal) {
                             modal.classList.remove("hidden");
                             modal.classList.add("hs-overlay-open");
-                            console.log("Modal ditampilkan");
 
                             // Memicu dialog cetak
                             setTimeout(() => {
                                 window.print();
-                            }, 500); // Penundaan untuk memastikan modal sepenuhnya dirender
+                            }, 500);
                         } else {
                             console.error("Elemen modal tidak ditemukan");
                         }
 
                         // Reset input form
                         form.reset();
-                    } else {
-                        // Tangani kesalahan
-                        alert("Error: " + data.message);
                     }
-                })
-                .catch((error) => {
-                    console.error("Error:", error);
-                    alert("Terjadi kesalahan: " + error.message);
                 });
         });
     } else {
@@ -223,18 +195,24 @@ document.addEventListener("DOMContentLoaded", function () {
             fetch(`/api/transaction/${transactionId}`)
                 .then((response) => response.json())
                 .then((data) => {
-                    // Populate modal with transaction data
+                    // Update modal content
+                    document.querySelector(".amount-paid").textContent = `Rp. ${
+                        data.amount_paid || "0"
+                    }`;
+                    document.querySelector(".date-paid").textContent =
+                        data.date_paid || "N/A";
+
                     const itemList = document.querySelector(".item-list");
                     itemList.innerHTML = data.items
                         .map(
                             (item) => `
-                    <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:border-neutral-700 dark:text-neutral-200">
-                        <div class="flex items-center justify-between w-full">
-                            <span>${item.nama_barang} (x${item.jumlah})</span>
-                            <span>Rp ${item.total_harga}</span>
-                        </div>
-                    </li>
-                `
+                            <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:border-neutral-700 dark:text-neutral-200">
+                                <div class="flex items-center justify-between w-full">
+                                    <span>${item.nama_barang} (x${item.jumlah})</span>
+                                    <span>Rp ${item.total_harga}</span>
+                                </div>
+                            </li>
+                        `
                         )
                         .join("");
 
@@ -243,13 +221,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (modal) {
                         modal.classList.remove("hidden");
                         modal.classList.add("hs-overlay-open");
-
-                        // Trigger print
-                        setTimeout(() => {
-                            window.print();
-                        }, 500);
                     } else {
-                        console.error("Modal element not found");
+                        console.error("Elemen modal tidak ditemukan");
                     }
                 })
                 .catch((error) => console.error("Error:", error));

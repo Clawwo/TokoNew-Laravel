@@ -55,7 +55,7 @@
                                             <td class="px-6 py-3 text-sm text-gray-500 dark:text-white">Rp.
                                                 {{ $pnjl->total_transaksi }}</td>
                                             <td class="px-6 py-3 text-end">
-                                                <a class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-800 transition-all duration-300 bg-white border border-gray-200 rounded-lg shadow-sm gap-x-2 dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 hover:bg-blue-600 hover:text-white print-invoice"
+                                                <a class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-800 transition-all duration-300 bg-white border border-gray-200 rounded-lg shadow-sm gap-x-2 dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 hover:bg-blue-600 hover:text-white print-invoice cursor-pointer"
                                                     data-transaction-id="{{ $pnjl->id_transaksi }}" aria-haspopup="dialog"
                                                     aria-expanded="false" aria-controls="hs-ai-modal"
                                                     data-hs-overlay="#hs-ai-modal">
