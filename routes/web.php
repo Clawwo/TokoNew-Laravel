@@ -43,5 +43,6 @@ Route::post('/transaksiprocess', [PenjualanController::class, 'store'])->name('s
 Route::get('/barang/{id_barang}', [PenjualanController::class, 'getBarang'])->name('getBarang');
 Route::get('/invoice/riwayat', [PenjualanController::class, 'riwayatInvoice'])->name('riwayatInvoice');
 Route::delete('/penjualan/{id}', [PenjualanController::class, 'destroy'])->name('hapusInvoice');
+Route::get('/get-pelanggan/{id}', [PenjualanController::class, 'getPelanggan']);
 
 Route::middleware(['auth'])->group(function () {});
