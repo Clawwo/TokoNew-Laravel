@@ -95,10 +95,21 @@ class BarangController extends Controller
 
     public function hapusBarang($id_barang)
     {
-        $barang = Barang::find($id_barang);
-        $barang->delete();
-        return redirect()->route('tampilBarang');
+        try {
+            $barang = Barang::find($id_barang);
+
+            // Hapus gambar jika ada
+            if ($barang->image) {
+                $imagePath = public_path('images/products/') . $barang->image;
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+
+            $barang->delete();
+            return redirect()->route('tampilBarang')->with('success', 'Produk berhasil dihapus!');
+        } catch (\Exception $e) {
+            return redirect()->route('tampilBarang')->with('error', 'Gagal menghapus produk. Silakan coba lagi.');
+        }
     }
-
-
 }

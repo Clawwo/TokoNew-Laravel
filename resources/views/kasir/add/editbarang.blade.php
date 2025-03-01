@@ -3,58 +3,122 @@
 @section('content')
     <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
         <div class="max-w-2xl mx-auto">
-            <div class="text-center">
-                <h2 class="text-xl font-bold text-gray-800 sm:text-3xl dark:text-white">
+            <!-- Header -->
+            <div class="mb-8 text-center">
+                <h2 class="text-2xl font-bold text-gray-800 sm:text-3xl dark:text-white">
                     Edit Product
                 </h2>
+                <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                    Update the product details below
+                </p>
             </div>
+            <!-- End Header -->
 
             <!-- Card -->
             <div
-                class="relative z-10 p-4 mt-5 bg-white border rounded-xl sm:mt-10 md:p-10 dark:bg-neutral-900 dark:border-neutral-700">
-                <form action="{{ route('updateBarang', $barang->id_barang) }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('patch')
-                    <div class="mb-4 sm:mb-8">
-                        <label for="hs-feedback-post-comment-name-1"
-                            class="block mb-2 text-sm font-medium dark:text-white">Product Name</label>
-                        <input type="text" id="hs-feedback-post-comment-name-1"
-                            class="block w-full px-4 py-3 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                            placeholder="Enter Product Name" name="nama_barang" autocomplete="off"
-                            value="{{ $barang->nama_barang }}">
-                    </div>
+                class="overflow-hidden bg-white border border-gray-200 shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700">
+                <div class="p-4 sm:p-7">
+                    <form action="{{ route('updateBarang', $barang->id_barang) }}" method="POST" enctype="multipart/form-data"
+                        class="space-y-8">
+                        @csrf
+                        @method('patch')
+                        <div class="space-y-8">
+                            <!-- Product Name -->
+                            <div class="relative group">
+                                <label for="product-name"
+                                    class="block mb-2 text-sm font-medium text-gray-800 dark:text-white">
+                                    Product Name <span class="text-red-500">*</span>
+                                </label>
+                                <div class="relative">
+                                    <input type="text" id="product-name" name="nama_barang"
+                                        class="block w-full px-4 py-3 text-sm text-gray-900 placeholder-gray-400 transition-all duration-200 bg-white border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-100 dark:placeholder-neutral-400 group-hover:border-gray-300 dark:group-hover:border-neutral-600"
+                                        placeholder="Enter product name" value="{{ $barang->nama_barang }}"
+                                        autocomplete="off" required>
+                                    <div
+                                        class="absolute inset-y-0 right-0 flex items-center pr-3 transition-opacity duration-200 opacity-0 pointer-events-none group-hover:opacity-100">
+                                        <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
 
-                    <div class="mb-4 sm:mb-8">
-                        <label for="hs-feedback-post-comment-email-1"
-                            class="block mb-2 text-sm font-medium dark:text-white">Price</label>
-                        <input type="number" id="hs-feedback-post-comment-email-1"
-                            class="block w-full px-4 py-3 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                            placeholder="Enter Price" name="harga_barang" value="{{ $barang->harga_barang }}">
-                    </div>
-                    <div class="mb-4 sm:mb-8">
-                        <label for="hs-feedback-post-comment-email-1"
-                            class="block mb-2 text-sm font-medium dark:text-white">Stock</label>
-                        <input type="number" id="hs-feedback-post-comment-email-1"
-                            class="block w-full px-4 py-3 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                            placeholder="Product Stock" name="stock" value="{{ $barang->stock }}">
-                    </div>
-                    <div class="mb-4 sm:mb-8">
-                        <label for="hs-feedback-post-comment-email-1"
-                            class="block mb-2 text-sm font-medium dark:text-white">Pictures</label>
-                        <img src="{{ asset('images/products/' . $barang->image) }}" alt="Gambar Barang">
+                            <!-- Price -->
+                            <div class="relative group">
+                                <label for="product-price"
+                                    class="block mb-2 text-sm font-medium text-gray-800 dark:text-white">
+                                    Price <span class="text-red-500">*</span>
+                                </label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                                        <span class="text-gray-500 dark:text-gray-400">Rp</span>
+                                    </div>
+                                    <input type="number" id="product-price" name="harga_barang"
+                                        class="block w-full py-3 pl-12 pr-10 text-sm text-gray-900 placeholder-gray-400 transition-all duration-200 bg-white border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-100 dark:placeholder-neutral-400 group-hover:border-gray-300 dark:group-hover:border-neutral-600 hide-number-spinner"
+                                        placeholder="0" value="{{ $barang->harga_barang }}" min="0" required>
+                                    <div
+                                        class="absolute inset-y-0 right-0 flex items-center pr-3 transition-opacity duration-200 opacity-0 pointer-events-none group-hover:opacity-100">
+                                        <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
 
-                        <input type="file" id="hs-feedback-post-comment-email-1"
-                            class="block w-full px-4 py-3 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                            placeholder="Enter Price" name="image" value="{{ $barang->image }}">
-                    </div>
-                    <div class="grid mt-6">
-                        <button type="submit"
-                            class="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-lg gap-x-2 hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">Submit</button>
-                    </div>
-                </form>
+                            <!-- Stock -->
+                            <div class="relative group">
+                                <label for="product-stock"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    Stock <span class="text-red-500">*</span>
+                                </label>
+                                <div class="relative">
+                                    <input type="number" id="product-stock" name="stock"
+                                        class="block w-full px-4 py-3 text-sm text-gray-900 placeholder-gray-400 transition-all duration-200 bg-white border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-100 dark:placeholder-neutral-400 group-hover:border-gray-300 dark:group-hover:border-neutral-600 hide-number-spinner"
+                                        placeholder="0" value="{{ $barang->stock }}" min="0" required>
+                                    <div
+                                        class="absolute inset-y-0 right-0 flex items-center pr-3 transition-opacity duration-200 opacity-0 pointer-events-none group-hover:opacity-100">
+                                        <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <!-- Buttons -->
+                            <div class="flex items-center pt-4 gap-x-2">
+                                <a href="{{ route('tampilBarang') }}"
+                                    class="inline-flex items-center justify-center w-full px-6 py-3 text-sm font-semibold transition-all duration-200 bg-gray-100 border border-transparent rounded-lg text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 dark:focus:ring-offset-neutral-900 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700 transform hover:scale-[1.02] active:scale-[0.98]">
+                                    <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                                    </svg>
+                                    Back
+                                </a>
+
+                                <button type="submit"
+                                    class="inline-flex items-center justify-center w-full px-6 py-3 text-sm font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-neutral-900 transform hover:scale-[1.02] active:scale-[0.98] hover:shadow-lg">
+                                    <span>Update Product</span>
+                                    <svg class="w-5 h-5 ml-2 -mr-1" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
             <!-- End Card -->
         </div>
     </div>
-    <!-- End Comment Form -->
 @endsection

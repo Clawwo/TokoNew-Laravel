@@ -1,6 +1,15 @@
-@import '@fortawesome/fontawesome-free/css/all.css';
+@import "@fortawesome/fontawesome-free/css/all.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
+@layer utilities {
+    .hide-number-spinner::-webkit-inner-spin-button,
+    .hide-number-spinner::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    .hide-number-spinner {
+        -moz-appearance: textfield;
+    }
+}

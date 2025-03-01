@@ -6,8 +6,14 @@
         <div
             class="relative flex flex-col bg-white shadow-lg pointer-events-auto rounded-xl dark:bg-neutral-800 print:shadow-none">
             <div
-                class="relative overflow-hidden text-center bg-gray-900 min-h-32 rounded-t-xl dark:bg-neutral-950 print:bg-transparent ">
-
+                class="relative overflow-hidden text-center min-h-32 rounded-t-xl dark:bg-white print:bg-transparent ">
+                <figure class="absolute inset-x-0 bottom-0 -mb-px">
+                    <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                        viewBox="0 0 1920 100.1">
+                        <path fill="currentColor" class="fill-white dark:fill-neutral-800"
+                            d="M0,0c0,0,934.4,93.4,1920,0v100.1H0L0,0z"></path>
+                    </svg>
+                </figure>
             </div>
 
             <div class="relative z-10 -mt-12">

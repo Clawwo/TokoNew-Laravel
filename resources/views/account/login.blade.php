@@ -1,7 +1,8 @@
 @extends('layouts.main')
 
 @section('content')
-    <div class="w-4/12 mx-auto border border-gray-200 shadow-sm relativebg-white rounded-xl dark:bg-neutral-900 dark:border-neutral-700 mt-36">
+    <div
+        class="w-4/12 mx-auto border border-gray-200 shadow-sm relativebg-white rounded-xl dark:bg-neutral-900 dark:border-neutral-700 mt-36">
         <div class="p-4 sm:p-7">
             <div class="mb-6 text-center">
                 <h1 class="block mb-3 text-3xl font-bold text-gray-800 dark:text-white">Sign in</h1>
