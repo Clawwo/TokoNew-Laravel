@@ -211,13 +211,15 @@
                 title: 'Berhasil!',
                 text: '{{ session('success') }}',
                 timer: 1500,
-                showConfirmButton: false
+                showConfirmButton: false,
+                toast: true,
+                position: 'top-end'
             });
         @endif
 
         // Delete confirmation
-        document.querySelectorAll('.delete-btn').forEach(button => {
-            button.addEventListener('click', function(e) {
+        document.querySelectorAll('.delete-form').forEach(form => {
+            form.querySelector('.delete-btn').addEventListener('click', function(e) {
                 e.preventDefault();
                 const form = this.closest('.delete-form');
 
