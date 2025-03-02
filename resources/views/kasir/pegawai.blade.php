@@ -45,6 +45,22 @@
                             </div>
                             <!-- End Header -->
 
+                            <!-- Search Results Indicator -->
+                            @if (request('search'))
+                                <div class="px-6 py-2 bg-blue-50 dark:bg-blue-900/20">
+                                    <div class="flex items-center justify-between">
+                                        <p class="text-sm text-blue-600 dark:text-blue-400">
+                                            Hasil pencarian untuk: "{{ request('search') }}"
+                                            <span class="font-medium">({{ $total_pegawai }} hasil)</span>
+                                        </p>
+                                        <a href="{{ route('tampilPegawai') }}"
+                                            class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                                            Reset pencarian
+                                        </a>
+                                    </div>
+                                </div>
+                            @endif
+
                             <!-- Table -->
                             <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
                                 <thead class="bg-gray-50 dark:bg-neutral-800">
@@ -144,8 +160,8 @@
 
                                             <td class="px-6 py-4 text-right whitespace-nowrap">
                                                 <div class="flex items-center justify-end gap-x-2">
-                                                    <form action="{{ route('HapusPegawai', $pgw->id_user) }}" method="POST"
-                                                        class="delete-form">
+                                                    <form action="{{ route('HapusPegawai', $pgw->id_user) }}"
+                                                        method="POST" class="delete-form">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="button"
@@ -166,6 +182,29 @@
                                             </td>
                                         </tr>
                                     @endforeach
+
+                                    @if ($pegawai->isEmpty())
+                                        <tr>
+                                            <td colspan="6" class="px-6 py-12">
+                                                <div class="text-center">
+                                                    <svg class="w-12 h-12 mx-auto text-gray-400 dark:text-neutral-500"
+                                                        xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                    </svg>
+                                                    <h3
+                                                        class="mt-2 text-sm font-semibold text-gray-900 dark:text-neutral-200">
+                                                        Tidak ada data
+                                                    </h3>
+                                                    <p class="mt-1 text-sm text-gray-500 dark:text-neutral-400">
+                                                        {{ request('search') ? 'Tidak ada hasil yang cocok dengan pencarian Anda.' : 'Belum ada data pegawai yang tersedia.' }}
+                                                    </p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endif
                                 </tbody>
                             </table>
                             <!-- End Table -->

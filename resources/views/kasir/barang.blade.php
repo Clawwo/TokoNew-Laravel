@@ -45,6 +45,22 @@
                             </div>
                             <!-- End Header -->
 
+                            <!-- Search Results Indicator -->
+                            @if (request('search'))
+                                <div class="px-6 py-2 bg-blue-50 dark:bg-blue-900/20">
+                                    <div class="flex items-center justify-between">
+                                        <p class="text-sm text-blue-600 dark:text-blue-400">
+                                            Hasil pencarian untuk: "{{ request('search') }}"
+                                            <span class="font-medium">({{ $total_barang }} hasil)</span>
+                                        </p>
+                                        <a href="{{ route('tampilBarang') }}"
+                                            class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                                            Reset pencarian
+                                        </a>
+                                    </div>
+                                </div>
+                            @endif
+
                             <!-- Table -->
                             <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
                                 <thead>
@@ -170,9 +186,10 @@
                                                         @method('DELETE')
                                                         <button type="button"
                                                             class="inline-flex items-center px-3 py-2 text-sm font-medium text-red-600 transition-all duration-300 bg-white border border-gray-200 rounded-lg shadow-sm gap-x-2 hover:bg-red-50 dark:bg-transparent dark:border-neutral-700 dark:text-red-300 dark:hover:bg-neutral-800 delete-btn">
-                                                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg"
-                                                                width="24" height="24" viewBox="0 0 24 24"
-                                                                fill="none" stroke="currentColor" stroke-width="2"
+                                                            <svg class="shrink-0 size-4"
+                                                                xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
                                                                 stroke-linecap="round" stroke-linejoin="round">
                                                                 <path d="M3 6h18" />
                                                                 <path d="M8 6v14a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V6" />
@@ -186,6 +203,29 @@
                                             </td>
                                         </tr>
                                     @endforeach
+
+                                    @if ($barang->isEmpty())
+                                        <tr>
+                                            <td colspan="6" class="px-6 py-12">
+                                                <div class="text-center">
+                                                    <svg class="w-12 h-12 mx-auto text-gray-400 dark:text-neutral-500"
+                                                        xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                                                    </svg>
+                                                    <h3
+                                                        class="mt-2 text-sm font-semibold text-gray-900 dark:text-neutral-200">
+                                                        Tidak ada data
+                                                    </h3>
+                                                    <p class="mt-1 text-sm text-gray-500 dark:text-neutral-400">
+                                                        {{ request('search') ? 'Tidak ada hasil yang cocok dengan pencarian Anda.' : 'Belum ada data produk yang tersedia.' }}
+                                                    </p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endif
                                 </tbody>
                             </table>
                             <!-- End Table -->

@@ -26,9 +26,21 @@ class HomeController extends Controller
         return view('kasir.add.tambahpelanggan');
     }
 
-    public function tampilPelanggan()
+    public function tampilPelanggan(Request $request)
     {
-        $pelanggan = Pelanggan::all();
+        $search = $request->input('search');
+
+        $query = Pelanggan::query();
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('nama', 'LIKE', "%{$search}%")
+                    ->orWhere('id_pelanggan', 'LIKE', "%{$search}%")
+                    ->orWhere('gender', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $pelanggan = $query->get();
         $total_pelanggan = $pelanggan->count();
 
         return view('kasir.pelanggan', compact('pelanggan', 'total_pelanggan'));
@@ -39,12 +51,24 @@ class HomeController extends Controller
         $pelanggan = Pelanggan::findOrFail($id_pelanggan);
         $pelanggan->delete();
 
-        return redirect()->route('tampilPelanggan')->with('success', 'Data pegawai berhasil dihapus');
+        return redirect()->route('tampilPelanggan')->with('success', 'Data pelanggan berhasil dihapus');
     }
 
-    public function tampilPegawai()
+    public function tampilPegawai(Request $request)
     {
-        $pegawai = User::all();
+        $search = $request->input('search');
+
+        $query = User::query();
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('username', 'LIKE', "%{$search}%")
+                    ->orWhere('email', 'LIKE', "%{$search}%")
+                    ->orWhere('role', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $pegawai = $query->get();
         $total_pegawai = $pegawai->count();
 
         return view('kasir.pegawai', compact('pegawai', 'total_pegawai'));
@@ -68,7 +92,7 @@ class HomeController extends Controller
         $pegawai->role = 'pegawai';
         $pegawai->save();
 
-        return redirect()->route('tampilPegawai')->with('success', 'Data berhasil disimpan');
+        return redirect()->route('tampilPegawai')->with('success', 'Data pegawai berhasil ditambahkan');
     }
 
     public function hapusPegawai($id_user)
