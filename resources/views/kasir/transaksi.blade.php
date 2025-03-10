@@ -3,6 +3,7 @@
 @section('content')
     @include('components.invoice')
     @include('components.sidebar')
+    
     <div class="p-6 sm:ml-64 ">
         <div
             class="container p-6 mx-auto text-gray-800 border rounded-lg shadow-md dark:bg-neutral-800 dark:border-neutral-700">

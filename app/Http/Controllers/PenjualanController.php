@@ -8,10 +8,12 @@ use App\Models\DetailPenjualan;
 use App\Models\Pelanggan;
 use App\Models\Barang;
 use Illuminate\Support\Facades\DB;
+use App\Traits\PenjualanTrait;
 use Barryvdh\DomPDF\PDF;
 
 class PenjualanController extends Controller
 {
+
     public function create()
     {
         $pelanggan = Pelanggan::all();
@@ -105,11 +107,26 @@ class PenjualanController extends Controller
         }
     }
 
+    use PenjualanTrait;
+
+    public function laporan()
+    {
+        $penjualan = $this->getPenjualanData();
+        return view('kasir.laporan', compact('penjualan'));
+    }
+
     public function riwayatInvoice()
     {
-        $penjualan = Penjualan::with(['pelanggan'])->get();
+        $penjualan = $this->getPenjualanData();
 
         return view('kasir.riwayat_invoice', compact('penjualan'));
+    }
+
+    public function Invoice()
+    {
+        $penjualan = $this->getPenjualanData();
+
+        return view('components.riwayatinvoice', compact('penjualan'));
     }
 
     public function destroy($id)
@@ -122,5 +139,20 @@ class PenjualanController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('riwayatInvoice')->with('error', 'Terjadi kesalahan saat menghapus invoice.');
         }
+    }
+
+    public function filterInvoice(Request $request)
+    {
+        // Ambil tanggal dari request
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        // Query data berdasarkan rentang tanggal
+        $penjualan = Penjualan::whereBetween('tgl_transaksi', [$startDate, $endDate])
+            ->orderBy('tgl_transaksi', 'asc')
+            ->get();
+
+        // Kembalikan view dengan data yang sudah difilter
+        return view('kasir.riwayat_invoice', compact('penjualan'));
     }
 }

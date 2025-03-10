@@ -25,6 +25,11 @@
                 visibility: hidden;
             }
 
+            #laporan,
+            #laporan * {
+                visibility: visible;
+            }
+
             #hs-ai-modal,
             #hs-ai-modal * {
                 visibility: visible;
@@ -37,6 +42,18 @@
                 width: 100%;
                 height: auto;
                 background: white;
+            }
+
+            #laporan {
+                position: relative;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                background: white;
+                border: none;
+                box-shadow: none;
+                overflow: visible;
             }
         }
     </style>

@@ -44,5 +44,7 @@ Route::get('/barang/{id_barang}', [PenjualanController::class, 'getBarang'])->na
 Route::get('/invoice/riwayat', [PenjualanController::class, 'riwayatInvoice'])->name('riwayatInvoice');
 Route::delete('/penjualan/{id}', [PenjualanController::class, 'destroy'])->name('hapusInvoice');
 Route::get('/get-pelanggan/{id}', [PenjualanController::class, 'getPelanggan']);
+Route::get('/laporan', [PenjualanController::class, 'laporan'])->name('laporan');
+Route::get('/filterInvoice', [PenjualanController::class, 'filterInvoice'])->name('filterInvoice');
 
 Route::middleware(['auth'])->group(function () {});
