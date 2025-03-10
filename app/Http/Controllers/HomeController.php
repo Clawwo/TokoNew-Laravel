@@ -26,6 +26,27 @@ class HomeController extends Controller
         return view('kasir.add.tambahpelanggan');
     }
 
+    public function editPelanggan($id_pelanggan)
+    {
+        $pelanggan = Pelanggan::findOrFail($id_pelanggan);
+        return view('kasir/add/editpelanggan', compact('pelanggan'));
+    }
+
+    public function updatePelanggan(Request $request, $id_pelanggan)
+    {
+        $request->validate([
+            'nama' => 'required|string',
+            'gender' => 'required|string',
+        ]);
+
+        $pelanggan = Pelanggan::findOrFail($id_pelanggan);
+        $pelanggan->nama = $request->input('nama');
+        $pelanggan->gender = $request->input('gender');
+        $pelanggan->save();
+
+        return redirect()->route('tampilPelanggan')->with('success', 'Data pelanggan berhasil diperbarui');
+    }
+
     public function tampilPelanggan(Request $request)
     {
         $search = $request->input('search');
@@ -77,6 +98,29 @@ class HomeController extends Controller
     public function tambahPegawai()
     {
         return view('kasir.add.tambahpegawai');
+    }
+
+    public function editPegawai($id_user)
+    {
+        $pegawai = User::findOrFail($id_user);
+        return view('kasir.add.editpegawai', compact('pegawai'));
+    }
+
+    public function updatePegawai(Request $request, $id_user)
+    {
+        $request->validate([
+            'username' => 'required|string',
+            'email' => 'required|email',
+            'role' => 'required|string',
+        ]);
+
+        $pegawai = User::findOrFail($id_user);
+        $pegawai->username = $request->input('username');
+        $pegawai->email = $request->input('email');
+        $pegawai->role = $request->input('role');
+        $pegawai->save();
+
+        return redirect()->route('tampilPegawai')->with('success', 'Data pegawai berhasil diperbarui');
     }
 
     public function tambahPegawaiProces(Request $request)

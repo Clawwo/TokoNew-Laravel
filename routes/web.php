@@ -21,12 +21,16 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/kasir/add/tambahpelangganproces', [HomeController::class, 'TambahPelangganproces'])->name('TambahPelangganproces');
 Route::get('/kasir/add/tambahpelanggan', [HomeController::class, 'tambahPelanggan'])->name('tambahPelanggan');
 Route::get('/kasir/pelanggan', [HomeController::class, 'tampilPelanggan'])->name('tampilPelanggan');
+Route::get('/kasir/add/editpelanggan/{id_pelanggan}', [HomeController::class, 'editPelanggan'])->name('editPelanggan');
+Route::patch('/kasir/add/editpelanggan/{id_pelanggan}', [HomeController::class, 'updatePelanggan'])->name('updatePelanggan');
 Route::delete('/kasir/pelanggan/{id}', [HomeController::class, 'hapusPelanggan'])->name('HapusPelanggan');
 
 //pegawai
 Route::post('/kasir/add/tambahpegawaiproces', [HomeController::class, 'tambahPegawaiProces'])->name('TambahPegawaiProces');
 Route::get('/kasir/add/tambahpegawai', [HomeController::class, 'tambahPegawai'])->name('tambahPegawai');
 Route::get('/kasir/pegawai', [HomeController::class, 'tampilPegawai'])->name('tampilPegawai');
+Route::get('/kasir/add/editpegawai/{id_user}', [HomeController::class, 'editPegawai'])->name('editPegawai');
+Route::patch('/kasir/add/editpegawai/{id_user}', [HomeController::class, 'updatePegawai'])->name('updatePegawai');
 Route::delete('/kasir/pegawai/{id_user}', [HomeController::class, 'hapusPegawai'])->name('HapusPegawai');
 
 //barang

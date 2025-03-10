@@ -159,6 +159,17 @@
 
                                             <td class="px-6 py-4 text-right whitespace-nowrap">
                                                 <div class="flex items-center justify-end gap-x-2">
+                                                    <a href="{{ route('editPelanggan', $plgn->id_pelanggan) }}"
+                                                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-800 transition-all duration-300 bg-white border border-gray-200 rounded-lg shadow-sm gap-x-2 hover:bg-blue-600 hover:text-white dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-blue-600">
+                                                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg"
+                                                            width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round">
+                                                            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+                                                            <path d="m15 5 4 4" />
+                                                        </svg>
+                                                        Edit
+                                                    </a>
                                                     <form action="{{ route('HapusPelanggan', $plgn->id_pelanggan) }}"
                                                         method="POST" class="delete-form">
                                                         @csrf
