@@ -22,6 +22,28 @@
                         @csrf
                         @method('patch')
                         <div class="space-y-8">
+                            <!-- Customer ID -->
+                            <div class="relative group">
+                                <label for="customer-id"
+                                    class="block mb-2 text-sm font-medium text-gray-800 dark:text-white">
+                                   ID Customer <span class="text-red-500">*</span>
+                                </label>
+                                <div class="relative">
+                                    <input type="text" id="customer-id" name="id_pelanggan"
+                                        class="block w-full px-4 py-3 text-sm text-gray-900 placeholder-gray-400 transition-all duration-200 bg-white border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-100 dark:placeholder-neutral-400 group-hover:border-gray-300 dark:group-hover:border-neutral-600"
+                                        placeholder="Enter customer ID" value="{{ $pelanggan->id_pelanggan }}" autocomplete="off"
+                                        required>
+                                    <div
+                                        class="absolute inset-y-0 right-0 flex items-center pr-3 transition-opacity duration-200 opacity-0 pointer-events-none group-hover:opacity-100">
+                                        <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Customer Name -->
                             <div class="relative group">
                                 <label for="customer-name"

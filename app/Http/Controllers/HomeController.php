@@ -10,10 +10,18 @@ class HomeController extends Controller
 {
     public function TambahPelangganproces(Request $request)
     {
+        $request->validate([
+            'id_pelanggan' => 'required|string|unique:pelanggan,id_pelanggan',
+            'nama' => 'required|string',
+            'gender' => 'required|string',
+        ]);
+
+        $id_pelanggan = $request->input('id_pelanggan');
         $nama = $request->input('nama');
         $gender = $request->input('gender');
 
         $pelanggan = new Pelanggan();
+        $pelanggan->id_pelanggan = $id_pelanggan;
         $pelanggan->nama = $nama;
         $pelanggan->gender = $gender;
         $pelanggan->save();
@@ -35,11 +43,13 @@ class HomeController extends Controller
     public function updatePelanggan(Request $request, $id_pelanggan)
     {
         $request->validate([
+            'id_pelanggan' => 'required|string',
             'nama' => 'required|string',
             'gender' => 'required|string',
         ]);
 
         $pelanggan = Pelanggan::findOrFail($id_pelanggan);
+        $pelanggan->id_pelanggan = $request->input('id_pelanggan');
         $pelanggan->nama = $request->input('nama');
         $pelanggan->gender = $request->input('gender');
         $pelanggan->save();
