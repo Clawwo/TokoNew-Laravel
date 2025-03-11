@@ -5,7 +5,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\PenjualanController;
-use App\Models\Penjualan;
 use Illuminate\Support\Facades\App;
 
 Route::middleware(['guest'])->group(function () {});
@@ -48,7 +47,7 @@ Route::get('/barang/{id_barang}', [PenjualanController::class, 'getBarang'])->na
 Route::get('/invoice/riwayat', [PenjualanController::class, 'riwayatInvoice'])->name('riwayatInvoice');
 Route::delete('/penjualan/{id}', [PenjualanController::class, 'destroy'])->name('hapusInvoice');
 Route::get('/get-pelanggan/{id}', [PenjualanController::class, 'getPelanggan']);
-Route::get('/laporan', [PenjualanController::class, 'laporan'])->name('laporan');
+Route::get('/get-transaction/{id}', [PenjualanController::class, 'getTransaction'])->name('dataTransaction');
 Route::get('/filterInvoice', [PenjualanController::class, 'filterInvoice'])->name('filterInvoice');
 
 Route::middleware(['auth'])->group(function () {});

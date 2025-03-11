@@ -5,7 +5,7 @@
         class="m-3 mt-0 transition-all ease-out opacity-0 hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 sm:max-w-lg sm:w-full sm:mx-auto">
         <div
             class="relative flex flex-col bg-white shadow-lg pointer-events-auto rounded-xl dark:bg-neutral-800 print:shadow-none">
-            <div class="relative overflow-hidden text-center min-h-32 rounded-t-xl dark:bg-white print:bg-transparent ">
+            <div class="relative overflow-hidden text-center min-h-32 rounded-t-xl dark:bg-black print:bg-transparent ">
                 <figure class="absolute inset-x-0 bottom-0 -mb-px">
                     <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                         viewBox="0 0 1920 100.1">

@@ -8,6 +8,6 @@ trait PenjualanTrait
 {
     public function getPenjualanData()
     {
-        return Penjualan::with(['pelanggan'])->get();
+        return Penjualan::with(['detailPenjualan.barang', 'pelanggan'])->get();
     }
 }

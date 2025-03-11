@@ -109,24 +109,10 @@ class PenjualanController extends Controller
 
     use PenjualanTrait;
 
-    public function laporan()
-    {
-        $penjualan = $this->getPenjualanData();
-        return view('kasir.laporan', compact('penjualan'));
-    }
-
     public function riwayatInvoice()
     {
         $penjualan = $this->getPenjualanData();
-
         return view('kasir.riwayat_invoice', compact('penjualan'));
-    }
-
-    public function Invoice()
-    {
-        $penjualan = $this->getPenjualanData();
-
-        return view('components.riwayatinvoice', compact('penjualan'));
     }
 
     public function destroy($id)
@@ -154,5 +140,23 @@ class PenjualanController extends Controller
 
         // Kembalikan view dengan data yang sudah difilter
         return view('kasir.riwayat_invoice', compact('penjualan'));
+    }
+
+    public function getTransaction($id)
+    {
+        // Ambil data transaksi beserta relasi detail_penjualan dan barang
+        $transaction = Penjualan::with(['detailPenjualan.barang', 'pelanggan'])->find($id);
+
+        if ($transaction) {
+            return response()->json([
+                'success' => true,
+                'transaction' => $transaction,
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Transaksi tidak ditemukan.',
+            ]);
+        }
     }
 }

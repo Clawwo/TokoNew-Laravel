@@ -85,15 +85,15 @@ document.addEventListener("DOMContentLoaded", function () {
             newItem.innerHTML = `
             <div class="relative flex items-center">
                 <i class="absolute text-gray-500 fas fa-barcode left-3"></i>
-                <input type="text" name="barang[${barangIndex}][id_barang]" class="p-2 pl-10 border id-barang dark:text-neutral-200 dark:bg-neutral-800 dark:border-neutral-700" placeholder="ID Barang" autocomplete="off" required>
+                <input type="text" name="barang[${barangIndex}][id_barang]" class="p-2 pl-10 border id-barang dark:text-neutral-200 dark:bg-neutral-800 dark:border-neutral-700" placeholder="ID Item" autocomplete="off" required>
             </div>
             <div class="relative flex items-center">
                 <i class="absolute text-gray-500 fas fa-box left-3"></i>
-                <input type="text" class="p-2 pl-10 border nama-barang dark:text-neutral-200 dark:bg-neutral-800 dark:border-neutral-700" placeholder="Nama Barang" readonly>
+                <input type="text" class="p-2 pl-10 border nama-barang dark:text-neutral-200 dark:bg-neutral-800 dark:border-neutral-700" placeholder="Item Name" readonly>
             </div>
             <div class="relative flex items-center">
                 <i class="absolute text-gray-500 fas fa-tag left-3"></i>
-                <input type="text" class="w-full p-2 pl-10 border harga-satuan dark:text-neutral-200 dark:bg-neutral-800 dark:border-neutral-700" placeholder="Harga Satuan" readonly data-harga="0">
+                <input type="text" class="w-full p-2 pl-10 border harga-satuan dark:text-neutral-200 dark:bg-neutral-800 dark:border-neutral-700" placeholder="Unit Price" readonly data-harga="0">
             </div>
             <div class="relative flex items-center">
                 <i class="absolute text-gray-500 fas fa-sort-numeric-up left-3"></i>
