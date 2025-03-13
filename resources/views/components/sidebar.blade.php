@@ -5,34 +5,72 @@
         <div class="flex items-center justify-end w-full ms-auto md:justify-between gap-x-1 md:gap-x-3">
 
             <div class="hidden md:block">
-                <!-- Search Input -->
-                <form
-                    action="{{ Request::routeIs('tampilPelanggan') ? route('tampilPelanggan') : (Request::routeIs('tampilPegawai') ? route('tampilPegawai') : (Request::routeIs('tampilBarang') ? route('tampilBarang') : '#')) }}"
-                    method="GET">
-                    <div
-                        class="p-1.5 flex flex-col sm:flex-row items-center gap-2 border border-gray-200 rounded-lg dark:border-neutral-700">
-                        <div class="relative w-full">
-                            <label for="hero-input" class="sr-only">Search</label>
-                            <div class="absolute inset-y-0 z-20 flex items-center pointer-events-none start-0 ps-3">
-                                <svg class="text-gray-400 size-4 dark:text-neutral-400"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                </svg>
+
+                @if (Request::routeIs('riwayatInvoice') || Request::routeIs('filterInvoice'))
+                    <!-- Filter Form -->
+                    <form action="{{ route('filterInvoice') }}" method="GET" class="my-3 print:hidden">
+                        <div class="grid items-end grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                            <!-- Input Dari Tanggal -->
+                            <div class="flex flex-col gap-1">
+                                <input type="date" id="start_date" name="start_date"
+                                    class="px-3 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-200 dark:focus:ring-blue-600 dark:focus:border-blue-600">
                             </div>
-                            <input type="text" id="hero-input" name="search" value="{{ request('search') }}"
-                                class="block w-full py-2 text-sm border-transparent rounded-lg ps-9 pe-3 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500"
-                                placeholder="{{ Request::routeIs('tampilPelanggan') ? 'Cari pelanggan...' : (Request::routeIs('tampilPegawai') ? 'Cari pegawai...' : (Request::routeIs('tampilBarang') ? 'Cari produk...' : 'Search...')) }}"
-                                autocomplete="off">
+                            <!-- Input Sampai Tanggal -->
+                            <div class="flex flex-col gap-1">
+                                <input type="date" id="end_date" name="end_date"
+                                    class="px-3 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-200 dark:focus:ring-blue-600 dark:focus:border-blue-600">
+                            </div>
+
+                            <!-- Tombol Filter -->
+                            <div>
+                                <button type="submit"
+                                    class="w-full px-4 py-3 text-sm font-medium text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-blue-700 dark:hover:bg-blue-800 dark:focus:ring-blue-600">
+                                    <i class="mr-2 fas fa-filter"></i> Filter
+                                </button>
+                            </div>
+
+
+                            <!-- Tombol Reset -->
+                            <div>
+                                <a href="{{ route('riwayatInvoice') }}"
+                                    class="block w-full px-4 py-3 text-sm font-medium text-center text-gray-700 bg-gray-100 rounded-lg shadow-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-600">
+                                    <i class="mr-2 fas fa-sync-alt"></i> Reset
+                                </a>
+                            </div>
                         </div>
-                        <button type="submit"
-                            class="inline-flex items-center justify-center px-4 py-2 text-sm font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-lg gap-x-2 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-neutral-900">
-                            Search
-                        </button>
-                    </div>
-                </form>
-                <!-- End Search Input -->
+                    </form>
+                    <!-- End Filter Form -->
+                @else
+                    <!-- Search Input -->
+                    <form
+                        action="{{ Request::routeIs('tampilPelanggan') ? route('tampilPelanggan') : (Request::routeIs('tampilPegawai') ? route('tampilPegawai') : (Request::routeIs('tampilBarang') ? route('tampilBarang') : '#')) }}"
+                        method="GET">
+                        <div
+                            class="p-1.5 flex flex-col sm:flex-row items-center gap-2 border border-gray-200 rounded-lg dark:border-neutral-700">
+                            <div class="relative w-full">
+                                <label for="hero-input" class="sr-only">Search</label>
+                                <div class="absolute inset-y-0 z-20 flex items-center pointer-events-none start-0 ps-3">
+                                    <svg class="text-gray-400 size-4 dark:text-neutral-400"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    </svg>
+                                </div>
+                                <input type="text" id="hero-input" name="search" value="{{ request('search') }}"
+                                    class="block w-full py-2 text-sm border-transparent rounded-lg ps-9 pe-3 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500"
+                                    placeholder="{{ Request::routeIs('tampilPelanggan') ? 'Cari pelanggan...' : (Request::routeIs('tampilPegawai') ? 'Cari pegawai...' : (Request::routeIs('tampilBarang') ? 'Cari produk...' : 'Search...')) }}"
+                                    autocomplete="off">
+                            </div>
+                            <button type="submit"
+                                class="inline-flex items-center justify-center px-4 py-2 text-sm font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-lg gap-x-2 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-neutral-900">
+                                Search
+                            </button>
+                        </div>
+                    </form>
+                    <!-- End Search Input -->
+                @endif
+
             </div>
 
             <div class="flex flex-row items-center justify-end gap-2">

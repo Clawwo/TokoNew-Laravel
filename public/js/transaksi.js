@@ -24,10 +24,35 @@ document.addEventListener("DOMContentLoaded", function () {
                             parent
                                 .querySelector(".jumlah")
                                 .setAttribute("max", data.stock);
+
+                            // Cek stok produk
+                            if (data.stock <= 0) {
+                                parent.querySelector(".jumlah").disabled = true;
+                                parent.querySelector(".jumlah").value = 0;
+                                parent.querySelector(".stok-info").textContent =
+                                    "Stok habis";
+                                parent.querySelector(".stok-info").style.color =
+                                    "red";
+                            } else {
+                                parent.querySelector(
+                                    ".jumlah"
+                                ).disabled = false;
+                                parent.querySelector(
+                                    ".stok-info"
+                                ).textContent = `Stok tersedia: ${data.stock}`;
+                                parent.querySelector(".stok-info").style.color =
+                                    "green";
+                            }
+
                             updateSubtotal(parent);
                         } else {
                             parent.querySelector(".nama-barang").value = "";
                             parent.querySelector(".harga-satuan").value = "";
+                            parent.querySelector(".jumlah").disabled = true;
+                            parent.querySelector(".stok-info").textContent =
+                                "Produk tidak ditemukan";
+                            parent.querySelector(".stok-info").style.color =
+                                "red";
                         }
                     })
                     .catch((error) => console.error("Error:", error));
@@ -37,9 +62,44 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll(".jumlah").forEach((input) => {
             input.addEventListener("input", function () {
                 let parent = this.closest(".barang-item");
+                let maxStock = parseInt(this.getAttribute("max"), 10);
+                let enteredQty = parseInt(this.value, 10);
+
+                // Validasi jumlah yang dimasukkan
+                if (enteredQty > maxStock) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Jumlah Melebihi Stok",
+                        text: `Stok tersedia: ${maxStock}`,
+                    });
+                    this.value = maxStock; // Set nilai ke stok maksimum
+                }
+
                 updateSubtotal(parent);
             });
         });
+    }
+
+    function validateTransaction() {
+        let isValid = true;
+        document.querySelectorAll(".barang-item").forEach((item) => {
+            let jumlahInput = item.querySelector(".jumlah");
+            let maxStock = parseInt(jumlahInput.getAttribute("max"), 10);
+            let enteredQty = parseInt(jumlahInput.value, 10);
+
+            if (enteredQty > maxStock) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Jumlah Melebihi Stok",
+                    text: `Jumlah untuk barang ${
+                        item.querySelector(".nama-barang").value
+                    } melebihi stok yang tersedia. Stok tersedia: ${maxStock}`,
+                });
+                isValid = false;
+            }
+        });
+
+        return isValid;
     }
 
     function updateSubtotal(parent) {
@@ -85,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function () {
             newItem.innerHTML = `
             <div class="relative flex items-center">
                 <i class="absolute text-gray-500 fas fa-barcode left-3"></i>
-                <input type="text" name="barang[${barangIndex}][id_barang]" class="p-2 pl-10 border id-barang dark:text-neutral-200 dark:bg-neutral-800 dark:border-neutral-700" placeholder="ID Item" autocomplete="off" required>
+                <input type="text" name="barang[${barangIndex}][id_barang]" class="p-2 pl-10 border id-barang dark:text-neutral-200 dark:bg-neutral-800 dark:border-neutral-700" placeholder="ID Item" autocomplete="off">
             </div>
             <div class="relative flex items-center">
                 <i class="absolute text-gray-500 fas fa-box left-3"></i>
@@ -152,7 +212,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (data.success) {
                         console.log("Transaksi berhasil:", data);
 
-                        // Perbarui konten modal dengan data transaksi
                         const amountPaidElement =
                             document.querySelector(".amount-paid");
                         if (amountPaidElement) {
@@ -182,25 +241,21 @@ document.addEventListener("DOMContentLoaded", function () {
                                 .join("");
                         }
 
-                        // Tampilkan modal
                         const modal = document.querySelector("#hs-ai-modal");
                         if (modal) {
                             modal.classList.remove("hidden");
                             modal.classList.add("hs-overlay-open");
                             console.log("Modal ditampilkan");
 
-                            // Memicu dialog cetak
                             setTimeout(() => {
                                 window.print();
-                            }, 500); // Penundaan untuk memastikan modal sepenuhnya dirender
+                            }, 500);
                         } else {
                             console.error("Elemen modal tidak ditemukan");
                         }
 
-                        // Reset input form
                         form.reset();
                     } else {
-                        // Tangani kesalahan
                         alert("Error: " + data.message);
                     }
                 })

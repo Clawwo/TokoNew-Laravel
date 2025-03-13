@@ -17,28 +17,28 @@ Route::post('/registerprocess', [AuthController::class, 'registerProcess'])->nam
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 //pelanggan
-Route::post('/kasir/add/tambahpelangganproces', [HomeController::class, 'TambahPelangganproces'])->name('TambahPelangganproces');
-Route::get('/kasir/add/tambahpelanggan', [HomeController::class, 'tambahPelanggan'])->name('tambahPelanggan');
-Route::get('/kasir/pelanggan', [HomeController::class, 'tampilPelanggan'])->name('tampilPelanggan');
-Route::get('/kasir/add/editpelanggan/{id_pelanggan}', [HomeController::class, 'editPelanggan'])->name('editPelanggan');
-Route::patch('/kasir/add/editpelanggan/{id_pelanggan}', [HomeController::class, 'updatePelanggan'])->name('updatePelanggan');
-Route::delete('/kasir/pelanggan/{id}', [HomeController::class, 'hapusPelanggan'])->name('HapusPelanggan');
+Route::post('/TokoNew/add/customersproces', [HomeController::class, 'TambahPelangganproces'])->name('TambahPelangganproces');
+Route::get('/TokoNew/add/customers', [HomeController::class, 'tambahPelanggan'])->name('tambahPelanggan');
+Route::get('/TokoNew/customers', [HomeController::class, 'tampilPelanggan'])->name('tampilPelanggan');
+Route::get('/TokoNew/edit/customers/{id_pelanggan}', [HomeController::class, 'editPelanggan'])->name('editPelanggan');
+Route::patch('/TokoNew/update/customers/{id_pelanggan}', [HomeController::class, 'updatePelanggan'])->name('updatePelanggan');
+Route::delete('/TokoNew/delete/customers/{id}', [HomeController::class, 'hapusPelanggan'])->name('HapusPelanggan');
 
 //pegawai
-Route::post('/kasir/add/tambahpegawaiproces', [HomeController::class, 'tambahPegawaiProces'])->name('TambahPegawaiProces');
-Route::get('/kasir/add/tambahpegawai', [HomeController::class, 'tambahPegawai'])->name('tambahPegawai');
-Route::get('/kasir/pegawai', [HomeController::class, 'tampilPegawai'])->name('tampilPegawai');
-Route::get('/kasir/add/editpegawai/{id_user}', [HomeController::class, 'editPegawai'])->name('editPegawai');
-Route::patch('/kasir/add/editpegawai/{id_user}', [HomeController::class, 'updatePegawai'])->name('updatePegawai');
-Route::delete('/kasir/pegawai/{id_user}', [HomeController::class, 'hapusPegawai'])->name('HapusPegawai');
+Route::post('/TokoNew/add/employeesproces', [HomeController::class, 'tambahPegawaiProces'])->name('TambahPegawaiProces');
+Route::get('/TokoNew/add/employees', [HomeController::class, 'tambahPegawai'])->name('tambahPegawai');
+Route::get('/TokoNew/employees', [HomeController::class, 'tampilPegawai'])->name('tampilPegawai');
+Route::get('/TokoNew/edit/employees/{id_user}', [HomeController::class, 'editPegawai'])->name('editPegawai');
+Route::patch('/TokoNew/update/employees/{id_user}', [HomeController::class, 'updatePegawai'])->name('updatePegawai');
+Route::delete('/TokoNew/delete/employees/{id_user}', [HomeController::class, 'hapusPegawai'])->name('HapusPegawai');
 
 //barang
-Route::post('/kasir/add/tambahbarangproces', [BarangController::class, 'TambahBarangproces'])->name('TambahBarangproces');
-Route::get('/kasir/barang', [BarangController::class, 'tampilBarang'])->name('tampilBarang');
-Route::get('/kasir/add/tambahbarang', [BarangController::class, 'tambahBarang'])->name('tambahBarang');
-Route::delete('/kasir/barang/{id_barang}', [BarangController::class, 'hapusBarang'])->name('HapusBarang');
-Route::get('/kasir/barang/{id_barang}/edit', [BarangController::class, 'editBarang'])->name('EditBarang');
-Route::patch('/kasir/barang/{id_barang}', [BarangController::class, 'updateBarang'])->name('updateBarang');
+Route::post('/TokoNew/add/itemsproces', [BarangController::class, 'TambahBarangproces'])->name('TambahBarangproces');
+Route::get('/TokoNew/add/items', [BarangController::class, 'tambahBarang'])->name('tambahBarang');
+Route::get('/TokoNew/items', [BarangController::class, 'tampilBarang'])->name('tampilBarang');
+Route::delete('/TokoNew/delete/items/{id_barang}', [BarangController::class, 'hapusBarang'])->name('HapusBarang');
+Route::get('/TokoNew/edit/items/{id_barang}', [BarangController::class, 'editBarang'])->name('EditBarang');
+Route::patch('/TokoNew/update/items/{id_barang}', [BarangController::class, 'updateBarang'])->name('updateBarang');
 
 //penjualan
 Route::get('/transaksi', [PenjualanController::class, 'create'])->name('transaksi.create');

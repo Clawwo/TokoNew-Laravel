@@ -6,40 +6,6 @@
 
     <div class="sm:ml-64" id="laporan">
         <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-            <!-- Filter Form -->
-            <form action="{{ route('filterInvoice') }}" method="GET" class="mb-10 print:hidden">
-                <div class="grid items-end grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                    <!-- Input Dari Tanggal -->
-                    <div class="flex flex-col gap-1">
-                        <input type="date" id="start_date" name="start_date"
-                            class="px-3 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-200 dark:focus:ring-blue-600 dark:focus:border-blue-600">
-                    </div>
-                    <!-- Input Sampai Tanggal -->
-                    <div class="flex flex-col gap-1">
-                        <input type="date" id="end_date" name="end_date"
-                            class="px-3 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-200 dark:focus:ring-blue-600 dark:focus:border-blue-600">
-                    </div>
-
-                    <!-- Tombol Filter -->
-                    <div>
-                        <button type="submit"
-                            class="w-full px-4 py-3 text-sm font-medium text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-blue-700 dark:hover:bg-blue-800 dark:focus:ring-blue-600">
-                            Filter
-                        </button>
-                    </div>
-
-                    <!-- Tombol Reset -->
-                    <div>
-                        <a href="{{ route('riwayatInvoice') }}"
-                            class="block w-full px-4 py-3 text-sm font-medium text-center text-gray-700 bg-gray-100 rounded-lg shadow-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-600">
-                            Reset
-                        </a>
-                    </div>
-                </div>
-            </form>
-            <!-- End Filter Form -->
-
-
             <!-- Card -->
             <div class="flex flex-col">
                 <div class="-m-1.5 overflow-x-auto">
@@ -175,6 +141,29 @@
                                             </td>
                                         </tr>
                                     @endforeach
+
+                                    @if ($penjualan->isEmpty())
+                                        <tr>
+                                            <td colspan="6" class="px-6 py-12">
+                                                <div class="text-center">
+                                                    <svg class="w-12 h-12 mx-auto text-gray-400 dark:text-neutral-500"
+                                                        xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                                                    </svg>
+                                                    <h3
+                                                        class="mt-2 text-sm font-semibold text-gray-900 dark:text-neutral-200">
+                                                        Tidak ada data Invoice
+                                                    </h3>
+                                                    <p class="mt-1 text-sm text-gray-500 dark:text-neutral-400">
+                                                        {{ request('filterInvoice') ? 'Tidak ada hasil yang cocok dengan pencarian Anda.' : 'Belum ada data invoice yang tersedia.' }}
+                                                    </p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endif
                                 </tbody>
                             </table>
                             <!-- End Table -->
@@ -251,6 +240,8 @@
                     });
             });
         });
+
+        
 
         // Check if there's a success message in the session
         @if (session('success'))
