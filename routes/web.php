@@ -16,6 +16,10 @@ Route::get('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/registerprocess', [AuthController::class, 'registerProcess'])->name('registerProcess');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+
+//Dashboard
+Route::get('/TokoNew/dashboard', [HomeController::class, 'Dashboard'])->name('Dashboard');
+
 //pelanggan
 Route::post('/TokoNew/add/customersproces', [HomeController::class, 'TambahPelangganproces'])->name('TambahPelangganproces');
 Route::get('/TokoNew/add/customers', [HomeController::class, 'tambahPelanggan'])->name('tambahPelanggan');

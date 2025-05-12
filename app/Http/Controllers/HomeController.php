@@ -156,4 +156,9 @@ class HomeController extends Controller
 
         return redirect()->route('tampilPegawai')->with('success', 'Data pegawai berhasil dihapus');
     }
+
+    public function Dashboard()
+    {
+        return view('kasir.dashboard');
+    }
 }
